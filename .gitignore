@@ -10,3 +10,6 @@
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+# Sample config
+**/*.nosync/

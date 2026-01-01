@@ -1,0 +1,29 @@
+services:
+  caddy:
+    image: caddy
+    container_name: caddy
+    mem_limit: '128m'
+    cpus: 1
+    restart: 'unless-stopped'
+    user: 1000:1000
+    volumes:
+      - ./caddy-etc_caddy:/etc/caddy
+      - ./caddy-config.nosync:/config
+      - ./caddy-data.nosync:/data
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+  vscodium:
+    image: lscr.io/linuxserver/vscodium-web:latest
+    container_name: vscodium
+    mem_limit: '2g'
+    cpus: 1
+    restart: 'unless-stopped'
+    environment:
+      TZ: 'Europe/Budapest'
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - ./vscodium-config.nosync:/config
+      - ./vscodium-workspace.nosync:/config/workspace

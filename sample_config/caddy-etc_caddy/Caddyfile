@@ -1,0 +1,43 @@
+{
+	local_certs
+	auto_https disable_redirects
+}
+
+(auth) {
+	basic_auth {
+		# https://bcrypt-generator.com/
+		# admin/admin
+		admin $2a$12$f/klGx5drUaMsqmSNtJr5OYnJVgrhavAE4lgfOPM.qz2e9eT8UMOe
+	}
+}
+
+http://cert.home.arpa {
+	handle_path / {
+		redir http://{host}/root.crt
+	}
+	handle_path /root.crt {
+		root /data/caddy/pki/authorities/local/root.crt
+		file_server
+	}
+}
+
+http://*.home.arpa {
+	redir https://{host}{uri} permanent
+}
+
+# args:
+# 0: subdomain
+# 1: outside port
+# 2: inside address
+(auth_routing) {
+	:{args[1]} {
+		import auth
+		reverse_proxy {args[2]}
+	}
+	{args[0]}.home.arpa {
+		import auth
+		reverse_proxy {args[2]}
+	}
+}
+
+import auth_routing vscodium 80 vscodium:8000
