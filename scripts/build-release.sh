@@ -5,7 +5,7 @@ set -eo pipefail
 pushd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null
 
 BUILD_ARGS=(
-	--product ExampleApp
+	--product auth_home_arpa
 	--configuration release
 )
 
