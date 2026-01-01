@@ -18,10 +18,8 @@ COPY ./Sources /workspace/Sources
 ARG TARGETPLATFORM
 RUN --mount=type=cache,target=/workspace/.build,id=build-$TARGETPLATFORM \
 	--mount=type=cache,target=/workspace/.spm-cache,id=spm-cache \
-	scripts/build-release.sh && \
-	mkdir -p dist && \
-	cp .build/release/ExampleApp dist
+	scripts/build-release.sh
 
 FROM scratch AS release
-COPY --from=build /workspace/dist/ExampleApp /usr/local/bin/swift-example
-ENTRYPOINT ["/usr/local/bin/swift-example"]
+COPY --from=build /workspace/.build/release/auth_home_arpa /usr/local/bin/auth_home_arpa
+ENTRYPOINT ["/usr/local/bin/auth_home_arpa"]

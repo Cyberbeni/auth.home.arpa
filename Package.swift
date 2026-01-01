@@ -1,34 +1,40 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
-	name: "ExampleApp",
-	platforms: [.macOS(.v15)], // macOS version that corresponds with the "swift-tools-version", so no availability checks are required.
+	name: "auth_home_arpa",
+	platforms: [.macOS(.v26)],
 	products: [
 		.executable(
-			name: "ExampleApp",
-			targets: ["ExampleApp"]
+			name: "auth_home_arpa",
+			targets: ["auth_home_arpa"],
 		),
 	],
 	dependencies: [
-		// .package(url: "https://github.com/swift-server-community/mqtt-nio", from: "2.11.0"),
+		.package(url: "https://github.com/Cyberbeni/CBLogging", from: "1.2.1"),
+		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.11.0"),
+		.package(url: "https://github.com/hummingbird-community/hummingbird-elementary", from: "0.4.1"),
+		.package(url: "https://github.com/sliemeobn/elementary-htmx", from: "0.4.0"),
 		// Plugins:
-		.package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.57.2"),
+		.package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.58.7"),
 	],
 	targets: [
 		.executableTarget(
-			name: "ExampleApp",
+			name: "auth_home_arpa",
 			dependencies: [
-				// .product(name: "MQTTNIO", package: "mqtt-nio"),
+				.product(name: "CBLogging", package: "CBLogging"),
+				.product(name: "Hummingbird", package: "hummingbird"),
+				.product(name: "HummingbirdElementary", package: "hummingbird-elementary"),
+				.product(name: "ElementaryHTMX", package: "elementary-htmx"),
 			],
 			swiftSettings: [
 				.unsafeFlags(["-warnings-as-errors"], .when(configuration: .release)),
 			],
 			linkerSettings: [
 				.unsafeFlags(["-Xlinker", "-s"], .when(configuration: .release)), // STRIP_STYLE = all
-			]
+			],
 		),
-	]
+	],
 )
