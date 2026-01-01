@@ -1,0 +1,12 @@
+# macOS
+*~
+.DS_Store
+
+# SPM
+.build/
+.swiftpm/
+
+# VSCode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
