@@ -28,9 +28,11 @@ auth.home.arpa {
 	import handle_auth
 }
 
+# args:
+# 0: redirect url
 (forward_auth) {
 	forward_auth unix//socket/auth.sock {
-		uri /api/auth
+		uri /api/auth?redirect={args[0]}
 	}
 }
 
@@ -60,13 +62,14 @@ auth.home.arpa {
 # 2: inside address
 (auth_routing) {
 	:{args[1]} {
-		import forward_auth
+		import forward_auth http://{host}:9999
 		import reverse_proxy {args[2]}
 	}
 	{args[0]}.home.arpa {
-		import forward_auth
+		import forward_auth https://auth.home.arpa
 		import reverse_proxy {args[2]}
 	}
 }
 
 import auth_routing vscodium 80 vscodium:8000
+import auth_routing vscodium2 8080 vscodium:8000

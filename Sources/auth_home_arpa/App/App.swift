@@ -14,7 +14,7 @@ actor App {
 
 	init() {
 		configDir = URL(filePath: "/config")
-		socketPath = "/socket/auth.socket"
+		socketPath = "/socket/auth.sock"
 	}
 
 	func run() async throws {
@@ -35,7 +35,7 @@ actor App {
 			services: [],
 			onServerRunning: { _ in
 				Log.info("Server running")
-			}
+			},
 		)
 
 		try await app.runService()
