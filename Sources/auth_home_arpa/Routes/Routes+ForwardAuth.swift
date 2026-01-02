@@ -3,28 +3,29 @@ import Hummingbird
 
 extension Router {
 	@discardableResult
-	func addForwardAuthRoutes() -> Self {
+	func addForwardAuthRoutes(userService: UserService) -> Self {
 		let protoHeaderName = HTTPField.Name("X-Forwarded-Proto")
 		let hostHeaderName = HTTPField.Name("X-Forwarded-Host")
 		let uriHeaderName = HTTPField.Name("X-Forwarded-Uri")
 
 		get("api/auth") { request, _ in
-			// TODO: check credentials
-			// let authOk = ...
-			if true {
+			if let cookie = request.cookies[Constants.cookieName],
+			   userService.checkCookie(cookie.value)
+			{
 				return Response(
 					status: .noContent,
 				)
 			} else {
-				guard let redirectString = request.uri.queryParameters["redirect"],
-				      let redirectUrlBase = URL(string: String(redirectString)),
-				      var components = URLComponents(url: redirectUrlBase, resolvingAgainstBaseURL: false),
-				      let protoHeaderName,
-				      let hostHeaderName,
-				      let uriHeaderName,
-				      let forwardedProto = request.headers[protoHeaderName],
-				      let forwardedHost = request.headers[hostHeaderName],
-				      let forwardedUri = request.headers[uriHeaderName]
+				guard
+					let redirectString = request.uri.queryParameters["redirect"],
+					let redirectUrlBase = URL(string: String(redirectString)),
+					var components = URLComponents(url: redirectUrlBase, resolvingAgainstBaseURL: false),
+					let protoHeaderName,
+					let hostHeaderName,
+					let uriHeaderName,
+					let forwardedProto = request.headers[protoHeaderName],
+					let forwardedHost = request.headers[hostHeaderName],
+					let forwardedUri = request.headers[uriHeaderName]
 				else {
 					return Response(
 						status: .badRequest,

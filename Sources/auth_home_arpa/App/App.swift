@@ -20,16 +20,29 @@ actor App {
 	}
 
 	func run() async throws {
-		// TODO: Parse config
+		// Parse config
+		let decoder = Config.jsonDecoder()
+		let userConfig: Config.User
 
-		// TODO: Setup services
+		do {
+			userConfig = try decoder.decode(
+				Config.User.self,
+				from: Data(contentsOf: configDir.appending(component: "config.user.json")),
+			)
+		} catch {
+			Log.error("Error parsing config.user.json: \(error)")
+			return
+		}
+
+		// Setup services
+		let userService = UserService(userConfig: userConfig)
 
 		// Setup Application
 		let router = Router()
 
 		router
-			.addForwardAuthRoutes()
-			.addLoginRoutes()
+			.addForwardAuthRoutes(userService: userService)
+			.addLoginRoutes(userService: userService)
 			.addUiRoutes(staticFilesTimestamp: staticFilesTimestamp)
 
 		router
