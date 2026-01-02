@@ -16,7 +16,8 @@ extension Router {
 			      let hxRedirectHeaderName,
 			      let currentUrlString = request.headers[currentUrlHeaderName],
 			      let currentUrlComponents = URLComponents(string: currentUrlString),
-			      let redirectUrl = currentUrlComponents.queryItems?.first(where: { $0.name == "redirect" })?.value
+			      let redirectUrl = currentUrlComponents.queryItems?.first(where: { $0.name == "redirect" })?.value,
+			      let loginRequest = try? await URLEncodedFormDecoder().decode(LoginRequest.self, from: request, context: context)
 			else {
 				// TODO: also update UI
 				return Response(
@@ -24,7 +25,6 @@ extension Router {
 				)
 			}
 			// TODO: check user/password
-			let loginRequest = try await URLEncodedFormDecoder().decode(LoginRequest.self, from: request, context: context)
 			guard !loginRequest.user.isEmpty,
 			      !loginRequest.password.isEmpty
 			else {
