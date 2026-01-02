@@ -2,6 +2,9 @@
 *~
 .DS_Store
 
+# Sample config
+**/*.nosync/
+
 # SPM
 .build/
 .swiftpm/
@@ -11,5 +14,5 @@
 !.vscode/extensions.json
 !.vscode/settings.json
 
-# Sample config
-**/*.nosync/
+# npm
+node_modules

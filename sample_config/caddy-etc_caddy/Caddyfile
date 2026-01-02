@@ -18,7 +18,8 @@ http://*.home.arpa {
 }
 
 (handle_auth) {
-	error /api/* 403
+	# TODO: should this be blocked?
+	# error /api/* 403
 	reverse_proxy unix//socket/auth.sock
 }
 :9999 {
