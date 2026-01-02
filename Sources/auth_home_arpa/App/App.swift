@@ -30,7 +30,7 @@ actor App {
 				from: Data(contentsOf: configDir.appending(component: "config.user.json")),
 			)
 		} catch {
-			Log.error("Error parsing config.users.json: \(error)")
+			Log.error("Error parsing config.user.json: \(error)")
 			return
 		}
 
