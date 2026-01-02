@@ -26,6 +26,7 @@ services:
     user: 1000:1000
     environment:
       TZ: 'Europe/Budapest'
+      LANG: 'hu'
     volumes:
       - ./auth-config:/config
       - ./auth-socket.nosync:/socket
