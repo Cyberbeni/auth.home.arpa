@@ -3,17 +3,8 @@
 	auto_https disable_redirects
 }
 
-http://cert.home.arpa {
-	handle_path / {
-		redir http://{host}/root.crt
-	}
-	handle_path /root.crt {
-		root /data/caddy/pki/authorities/local/root.crt
-		file_server
-	}
-}
-
-http://*.home.arpa {
+# writing cookies to home.arpa is restricted, so we need a common subdomain a level deeper
+http://*.test.home.arpa {
 	redir https://{host}{uri} permanent
 }
 
@@ -23,7 +14,7 @@ http://*.home.arpa {
 :9999 {
 	import handle_auth
 }
-auth.home.arpa {
+auth.test.home.arpa {
 	import handle_auth
 }
 
@@ -43,7 +34,7 @@ auth.home.arpa {
 	:{args[1]} {
 		reverse_proxy {args[2]}
 	}
-	{args[0]}.home.arpa {
+	{args[0]}.test.home.arpa {
 		reverse_proxy {args[2]}
 	}
 }
@@ -57,8 +48,8 @@ auth.home.arpa {
 		import forward_auth http://{host}:9999
 		reverse_proxy {args[2]}
 	}
-	{args[0]}.home.arpa {
-		import forward_auth https://auth.home.arpa
+	{args[0]}.test.home.arpa {
+		import forward_auth https://auth.test.home.arpa
 		reverse_proxy {args[2]}
 	}
 }
