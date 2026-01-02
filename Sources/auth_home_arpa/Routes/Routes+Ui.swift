@@ -3,10 +3,12 @@ import HummingbirdElementary
 
 extension Router {
 	@discardableResult
-	func addUiRoutes() -> Self {
+	func addUiRoutes(staticFilesTimestamp: String) -> Self {
 		get("login.html") { _, _ in
 			HTMLResponse {
-				LoginPage()
+				LoginPage(
+					staticFilesTimestamp: staticFilesTimestamp,
+				)
 			}
 		}
 

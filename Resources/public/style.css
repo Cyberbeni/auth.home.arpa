@@ -1,0 +1,20 @@
+form {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+td, th {
+	padding: 0.1875em;
+}
+
+input {
+	min-height: 26px;
+}
+
+#submit-button {
+	width: 100%;
+	min-height: 32px;
+}

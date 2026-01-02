@@ -4,6 +4,7 @@ import ServiceLifecycle
 actor App {
 	let configDir: URL
 	let socketPath: String
+	let staticFilesTimestamp: String
 
 	static func responseJsonEncoder() -> JSONEncoder {
 		let encoder = JSONEncoder()
@@ -12,9 +13,10 @@ actor App {
 		return encoder
 	}
 
-	init() {
+	init() throws {
 		configDir = URL(filePath: "/config")
 		socketPath = "/socket/auth.sock"
+		staticFilesTimestamp = try String(contentsOfFile: "/data/static_files_timestamp", encoding: .utf8)
 	}
 
 	func run() async throws {
@@ -27,7 +29,13 @@ actor App {
 
 		router
 			.addForwardAuthRoutes()
-			.addUiRoutes()
+			.addLoginRoutes()
+			.addUiRoutes(staticFilesTimestamp: staticFilesTimestamp)
+
+		router
+			.add(middleware: FileMiddleware("/data/public", urlBasePath: "/" + staticFilesTimestamp, cacheControl: .init([
+				(MediaType(type: .any), .publicImmutable),
+			])))
 
 		let app = Application(
 			router: router,

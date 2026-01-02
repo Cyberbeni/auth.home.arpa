@@ -13,7 +13,7 @@ class Entrypoint {
 			CBLogHandler.bootstrap(defaultLogLevel: .notice, appLogLevel: .info)
 		#endif
 
-		let app = App()
+		let app = try App()
 		try await app.run()
 	}
 }
