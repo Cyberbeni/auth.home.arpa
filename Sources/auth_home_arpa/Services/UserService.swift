@@ -1,20 +1,28 @@
 #if canImport(Musl)
-import Musl
+	import Musl
 #elseif canImport(Glibc)
-import Glibc
+	import Glibc
 #elseif canImport(Darwin)
-import Darwin
+	import Darwin
 #endif
 
-actor UserService {
-	nonisolated let userConfig: Config.User
+@globalActor
+actor PasswordHasher {
+	static let shared = PasswordHasher()
+}
+
+nonisolated struct UserService {
+	let userConfig: Config.User
 
 	init(userConfig: Config.User) {
 		self.userConfig = userConfig
 	}
 
-	nonisolated func checkPassword(user: String, password: String) -> String? {
-		guard let hashedPassword = userConfig.users[user],
+	// crypt(...) uses static storage, so usage needs to be isolated
+	@PasswordHasher
+	func checkPassword(user: String, password: String) -> String? {
+		guard
+			let hashedPassword = userConfig.users[user],
 			let result = crypt(password, hashedPassword).map({ String(cString: $0) }),
 			result == hashedPassword
 		else {
@@ -23,9 +31,10 @@ actor UserService {
 		return "\(Constants.cookieName)=\(Data(user.utf8).base64EncodedString()):\(hashedPassword)"
 	}
 
-	nonisolated func checkCookie(_ cookie: String) -> Bool {
+	func checkCookie(_ cookie: String) -> Bool {
 		let cookieComponents = cookie.components(separatedBy: ":")
-		guard cookieComponents.count == 2,
+		guard
+			cookieComponents.count == 2,
 			let encodedUser = cookieComponents.first,
 			let hashedPassword = cookieComponents.last,
 			let userData = Data(base64Encoded: encodedUser),

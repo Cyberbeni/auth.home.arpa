@@ -18,8 +18,6 @@ http://*.home.arpa {
 }
 
 (handle_auth) {
-	# TODO: should this be blocked?
-	# error /api/* 403
 	reverse_proxy unix//socket/auth.sock
 }
 :9999 {
@@ -38,22 +36,15 @@ auth.home.arpa {
 }
 
 # args:
-# 0: inside address
-(reverse_proxy) {
-	reverse_proxy {args[0]}
-	# TODO: remove cookie
-}
-
-# args:
 # 0: subdomain
 # 1: outside port
 # 2: inside address
 (routing) {
 	:{args[1]} {
-		import reverse_proxy {args[2]}
+		reverse_proxy {args[2]}
 	}
 	{args[0]}.home.arpa {
-		import reverse_proxy {args[2]}
+		reverse_proxy {args[2]}
 	}
 }
 
@@ -64,11 +55,11 @@ auth.home.arpa {
 (auth_routing) {
 	:{args[1]} {
 		import forward_auth http://{host}:9999
-		import reverse_proxy {args[2]}
+		reverse_proxy {args[2]}
 	}
 	{args[0]}.home.arpa {
 		import forward_auth https://auth.home.arpa
-		import reverse_proxy {args[2]}
+		reverse_proxy {args[2]}
 	}
 }
 

@@ -4,11 +4,11 @@
 import PackageDescription
 
 #if canImport(Glibc)
-let extraLinkerSettings: [LinkerSetting] = [
-	.unsafeFlags(["-lcrypt"])
-]
+	let extraLinkerSettings: [LinkerSetting] = [
+		.unsafeFlags(["-lcrypt"]),
+	]
 #else
-let extraLinkerSettings: [LinkerSetting] = []
+	let extraLinkerSettings: [LinkerSetting] = []
 #endif
 
 let package = Package(

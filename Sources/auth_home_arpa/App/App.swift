@@ -27,7 +27,7 @@ actor App {
 		do {
 			userConfig = try decoder.decode(
 				Config.User.self,
-				from: Data(contentsOf: configDir.appending(component: "config.user.json"))
+				from: Data(contentsOf: configDir.appending(component: "config.user.json")),
 			)
 		} catch {
 			Log.error("Error parsing config.users.json: \(error)")

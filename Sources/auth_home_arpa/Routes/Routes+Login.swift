@@ -13,31 +13,31 @@ extension Router {
 		let hxRedirectHeaderName = HTTPField.Name("HX-Redirect")
 
 		post("api/login") { request, context in
-			guard let currentUrlHeaderName,
-			      let hxRedirectHeaderName,
-			      let currentUrlString = request.headers[currentUrlHeaderName],
-					let currentUrl = URL(string: currentUrlString),
-			      let currentUrlComponents = URLComponents(string: currentUrlString),
-			      let redirectUrl = currentUrlComponents.queryItems?.first(where: { $0.name == "redirect" })?.value,
-			      let loginRequest = try? await URLEncodedFormDecoder().decode(LoginRequest.self, from: request, context: context)
+			guard
+				let currentUrlHeaderName,
+				let hxRedirectHeaderName,
+				let currentUrlString = request.headers[currentUrlHeaderName],
+				let currentUrl = URL(string: currentUrlString),
+				let currentUrlComponents = URLComponents(string: currentUrlString),
+				let redirectUrl = currentUrlComponents.queryItems?.first(where: { $0.name == "redirect" })?.value,
+				let loginRequest = try? await URLEncodedFormDecoder().decode(LoginRequest.self, from: request, context: context)
 			else {
 				// TODO: also update UI
 				return Response(
 					status: .badRequest,
 				)
 			}
-			guard var cookie = userService.checkPassword(user: loginRequest.user, password: loginRequest.password) else {
+			guard var cookie = await userService.checkPassword(user: loginRequest.user, password: loginRequest.password) else {
 				// TODO: also update UI
 				return Response(
 					status: .unauthorized,
 				)
 			}
 			if let host = currentUrl.host {
-				Log.info("Host: \(host)")
-				let ipRegex = /^(((?!25?[6-9])[12]\d|[1-9])?\d\.?\b){4}$/
+				let ipRegex = /^(?:(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\.(?!$)|$)){4}$/
 				if host.firstMatch(of: ipRegex) == nil {
-					// let hostComponents = host.components(separatedBy: ".")
-					// cookie.append("; Domain=\(hostComponents.suffix(2).joined(separator: "."))")
+					let hostComponents = host.components(separatedBy: ".")
+					cookie.append("; Domain=\(hostComponents.suffix(2).joined(separator: "."))")
 				}
 			}
 			cookie.append("; HttpOnly")
@@ -46,12 +46,11 @@ extension Router {
 			if currentUrlString.hasPrefix("https://") {
 				cookie.append("; Secure")
 			}
-			Log.info("Cookie: \(cookie)")
 			return Response(
 				status: .noContent,
 				headers: [
 					hxRedirectHeaderName: redirectUrl,
-					.setCookie: cookie
+					.setCookie: cookie,
 				],
 			)
 		}
