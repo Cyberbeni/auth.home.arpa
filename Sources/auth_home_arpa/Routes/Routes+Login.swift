@@ -42,7 +42,7 @@ extension Router {
 			}
 			cookie.append("; HttpOnly")
 			cookie.append("; Max-Age=2592000") // 30 days
-			cookie.append("; Path=/") // 30 days
+			cookie.append("; Path=/")
 			if currentUrlString.hasPrefix("https://") {
 				cookie.append("; Secure")
 			}
