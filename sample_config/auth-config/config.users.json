@@ -1,0 +1,7 @@
+{
+	"users": {
+		// https://bcrypt-generator.com/
+		// admin/admin
+		"admin": "$2a$12$3iKSAjIyQMVOC5DUBxjZk.iuFhUNfSoEHZSdR.MyXLJsXmmFNXGlC"
+	}
+}

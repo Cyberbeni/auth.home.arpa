@@ -3,6 +3,14 @@
 
 import PackageDescription
 
+#if canImport(Glibc)
+let extraLinkerSettings: [LinkerSetting] = [
+	.unsafeFlags(["-lcrypt"])
+]
+#else
+let extraLinkerSettings: [LinkerSetting] = []
+#endif
+
 let package = Package(
 	name: "auth_home_arpa",
 	platforms: [.macOS(.v26)],
@@ -34,7 +42,7 @@ let package = Package(
 			],
 			linkerSettings: [
 				.unsafeFlags(["-Xlinker", "-s"], .when(configuration: .release)), // STRIP_STYLE = all
-			],
+			] + extraLinkerSettings,
 		),
 	],
 )
