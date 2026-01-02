@@ -1,5 +1,5 @@
 extension Config {
-	struct Users: Decodable {
+	struct User: Decodable {
 		let users: [String: String]
 	}
 }

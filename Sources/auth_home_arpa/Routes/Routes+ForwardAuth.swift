@@ -3,15 +3,15 @@ import Hummingbird
 
 extension Router {
 	@discardableResult
-	func addForwardAuthRoutes() -> Self {
+	func addForwardAuthRoutes(userService: UserService) -> Self {
 		let protoHeaderName = HTTPField.Name("X-Forwarded-Proto")
 		let hostHeaderName = HTTPField.Name("X-Forwarded-Host")
 		let uriHeaderName = HTTPField.Name("X-Forwarded-Uri")
 
 		get("api/auth") { request, _ in
-			// TODO: check credentials
-			// let authOk = ...
-			if true {
+			if let cookie = request.cookies[Constants.cookieName],
+				userService.checkCookie(cookie.value)
+			{
 				return Response(
 					status: .noContent,
 				)

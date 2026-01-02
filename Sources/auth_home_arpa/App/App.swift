@@ -1,12 +1,5 @@
 import Hummingbird
 import ServiceLifecycle
-#if canImport(Musl)
-import Musl
-#elseif canImport(Glibc)
-import Glibc
-#elseif canImport(Darwin)
-import Darwin
-#endif
 
 actor App {
 	let configDir: URL
@@ -29,31 +22,27 @@ actor App {
 	func run() async throws {
 		// Parse config
 		let decoder = Config.jsonDecoder()
-		let usersConfig: Config.Users
+		let userConfig: Config.User
 
 		do {
-			usersConfig = try decoder.decode(
-				Config.Users.self,
-				from: Data(contentsOf: configDir.appending(component: "config.users.json"))
+			userConfig = try decoder.decode(
+				Config.User.self,
+				from: Data(contentsOf: configDir.appending(component: "config.user.json"))
 			)
 		} catch {
 			Log.error("Error parsing config.users.json: \(error)")
 			return
 		}
 
-		for (_, password) in usersConfig.users {
-			let result = crypt("admin", password).map { String(cString: $0) }
-			Log.info("crypt result: \(result ?? "-")")
-		}
-
-		// TODO: Setup services
+		// Setup services
+		let userService = UserService(userConfig: userConfig)
 
 		// Setup Application
 		let router = Router()
 
 		router
-			.addForwardAuthRoutes()
-			.addLoginRoutes()
+			.addForwardAuthRoutes(userService: userService)
+			.addLoginRoutes(userService: userService)
 			.addUiRoutes(staticFilesTimestamp: staticFilesTimestamp)
 
 		router
