@@ -27,7 +27,14 @@ struct LoginPage: HTMLDocument {
 						}
 					}
 					td {
-						input(.type(.text), .autocomplete("username"), .id("user"), .name("user"), .required)
+						input(
+							.type(.text),
+							.autocomplete("username"),
+							.id("user"),
+							.name("user"),
+							.init(name: "autocapitalize", value: "off"),
+							.required,
+						)
 					}
 				}
 				tr {
@@ -37,7 +44,13 @@ struct LoginPage: HTMLDocument {
 						}
 					}
 					td {
-						input(.type(.password), .autocomplete("current-password"), .id("password"), .name("password"), .required)
+						input(
+							.type(.password),
+							.autocomplete("current-password"),
+							.id("password"),
+							.name("password"),
+							.required,
+						)
 					}
 				}
 				tr {
