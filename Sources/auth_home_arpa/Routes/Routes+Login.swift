@@ -35,8 +35,10 @@ extension Router {
 			}
 			if let host = currentUrl.host {
 				let ipRegex = /^(?:(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\.(?!$)|$)){4}$/
-				if host.firstMatch(of: ipRegex) == nil {
-					let hostComponents = host.components(separatedBy: ".")
+				if host.firstMatch(of: ipRegex) == nil,
+				   case let hostComponents = host.components(separatedBy: "."),
+				   hostComponents.count > 2
+				{
 					cookie.append("; Domain=\(hostComponents.dropFirst().joined(separator: "."))")
 				}
 			}
