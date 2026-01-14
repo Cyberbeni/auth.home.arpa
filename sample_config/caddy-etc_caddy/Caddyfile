@@ -23,6 +23,8 @@ auth.test.home.arpa {
 (forward_auth) {
 	forward_auth unix//socket/auth.sock {
 		uri /api/auth?redirect={args[0]}
+		# https://github.com/caddyserver/caddy/issues/5430#issuecomment-1465216147
+		header_up -Connection
 	}
 }
 
