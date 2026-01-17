@@ -25,12 +25,10 @@ services:
     restart: 'unless-stopped'
     user: 1000:1000
     network_mode: none
-    environment:
-      TZ: 'Europe/Budapest'
-      LANG: 'hu'
     volumes:
       - ./auth-config:/config
       - ./auth-socket.nosync:/socket
+      - /etc/localtime:/etc/localtime:ro
   vscodium:
     image: lscr.io/linuxserver/vscodium-web:latest
     container_name: vscodium
