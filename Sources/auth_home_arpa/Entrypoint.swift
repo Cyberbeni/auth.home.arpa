@@ -1,5 +1,9 @@
 import CBLogging
-@_exported import Foundation
+#if canImport(FoundationEssentials)
+	@_exported import FoundationEssentials
+#else
+	@_exported import Foundation
+#endif
 
 var Log: Logger { CBLogHandler.appLogger }
 
