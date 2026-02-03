@@ -4,13 +4,22 @@ import Hummingbird
 extension Router {
 	@discardableResult
 	func addForwardAuthRoutes(userService: UserService) -> Self {
+		// TODO: set Tailscale as trusted proxy: https://caddyserver.com/docs/caddyfile/options#trusted-proxies
+		let ipHeaderName = HTTPField.Name("X-Forwarded-For")
 		let protoHeaderName = HTTPField.Name("X-Forwarded-Proto")
 		let hostHeaderName = HTTPField.Name("X-Forwarded-Host")
 		let uriHeaderName = HTTPField.Name("X-Forwarded-Uri")
 
 		get("api/auth") { request, _ in
+			guard let ipHeaderName,
+			      let ip = request.headers[ipHeaderName]
+			else {
+				return Response(
+					status: .badRequest,
+				)
+			}
 			if let cookie = request.cookies[Constants.cookieName],
-			   userService.checkCookie(cookie.value)
+			   await userService.checkCookie(cookie.value, ip: ip)
 			{
 				return Response(
 					status: .noContent,

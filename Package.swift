@@ -25,6 +25,7 @@ let package = Package(
 		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.18.3"),
 		.package(url: "https://github.com/hummingbird-community/hummingbird-elementary", from: "0.4.2"),
 		.package(url: "https://github.com/sliemeobn/elementary-htmx", from: "0.5.1"),
+		.package(url: "https://github.com/vapor/jwt-kit", from: "5.3.0"),
 		// Plugins:
 		.package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.58.7"),
 	],
@@ -36,9 +37,11 @@ let package = Package(
 				.product(name: "Hummingbird", package: "hummingbird"),
 				.product(name: "HummingbirdElementary", package: "hummingbird-elementary"),
 				.product(name: "ElementaryHTMX", package: "elementary-htmx"),
+				.product(name: "JWTKit", package: "jwt-kit"),
 			],
 			swiftSettings: [
 				.unsafeFlags(["-warnings-as-errors"], .when(configuration: .release)),
+				.enableUpcomingFeature("NonisolatedNonsendingByDefault"),
 			],
 			linkerSettings: [
 				.unsafeFlags(["-Xlinker", "-s"], .when(configuration: .release)), // STRIP_STYLE = all

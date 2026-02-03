@@ -9,13 +9,16 @@ private struct LoginRequest: Decodable {
 extension Router {
 	@discardableResult
 	func addLoginRoutes(userService: UserService) -> Self {
+		let ipHeaderName = HTTPField.Name("X-Forwarded-For")
 		let currentUrlHeaderName = HTTPField.Name("Hx-Current-Url")
 		let hxRedirectHeaderName = HTTPField.Name("HX-Redirect")
 
 		post("api/login") { request, context in
 			guard
+				let ipHeaderName,
 				let currentUrlHeaderName,
 				let hxRedirectHeaderName,
+				let ip = request.headers[ipHeaderName],
 				let currentUrlString = request.headers[currentUrlHeaderName],
 				let currentUrl = URL(string: currentUrlString),
 				let currentUrlComponents = URLComponents(string: currentUrlString),
@@ -27,7 +30,7 @@ extension Router {
 					status: .badRequest,
 				)
 			}
-			guard var cookie = await userService.checkPassword(user: loginRequest.user, password: loginRequest.password) else {
+			guard var cookie = try await userService.checkPassword(user: loginRequest.user, password: loginRequest.password, ip: ip) else {
 				// TODO: also update UI
 				return Response(
 					status: .unauthorized,
