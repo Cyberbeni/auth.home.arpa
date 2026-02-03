@@ -1,6 +1,10 @@
 {
 	local_certs
 	auto_https disable_redirects
+	servers {
+		# trust X-Forwarded-For coming from docker containers
+		trusted_proxies static 172.16.0.0/12
+	}
 }
 
 # writing cookies to home.arpa is restricted, so we need a common subdomain a level deeper
