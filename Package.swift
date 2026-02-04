@@ -21,12 +21,12 @@ let package = Package(
 		),
 	],
 	dependencies: [
-		.package(url: "https://github.com/Cyberbeni/CBLogging", from: "1.3.1", traits: []),
+		.package(url: "https://codeberg.org/Cyberbeni/CBLogging", from: "1.3.2", traits: []),
 		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.18.3"),
 		.package(url: "https://github.com/hummingbird-community/hummingbird-elementary", from: "0.4.2"),
 		.package(url: "https://github.com/sliemeobn/elementary-htmx", from: "0.5.1"),
 		// Plugins:
-		.package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.58.7"),
+		.package(url: "https://codeberg.org/Cyberbeni/SwiftFormat-mirror", from: "0.59.1"),
 	],
 	targets: [
 		.executableTarget(
@@ -39,6 +39,7 @@ let package = Package(
 			],
 			swiftSettings: [
 				.unsafeFlags(["-warnings-as-errors"], .when(configuration: .release)),
+				.enableUpcomingFeature("NonisolatedNonsendingByDefault"),
 			],
 			linkerSettings: [
 				.unsafeFlags(["-Xlinker", "-s"], .when(configuration: .release)), // STRIP_STYLE = all

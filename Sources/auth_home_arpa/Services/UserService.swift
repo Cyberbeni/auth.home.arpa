@@ -14,10 +14,6 @@ actor PasswordHasher {
 nonisolated struct UserService {
 	let userConfig: Config.User
 
-	init(userConfig: Config.User) {
-		self.userConfig = userConfig
-	}
-
 	// crypt(...) uses static storage, so usage needs to be isolated
 	@PasswordHasher
 	func checkPassword(user: String, password: String) -> String? {
