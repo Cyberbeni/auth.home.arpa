@@ -1,5 +1,5 @@
 {
-  "originHash" : "2e1addff04464c0cdfa0004e828c9561980823b0414951b05fbce5486a9c0e53",
+  "originHash" : "ebdc9749109551833653f8064e6533e9b211d8aa38957a51ca84dc1350580051",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -13,10 +13,10 @@
     {
       "identity" : "cblogging",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Cyberbeni/CBLogging",
+      "location" : "https://codeberg.org/Cyberbeni/CBLogging",
       "state" : {
-        "revision" : "dc4e713f925eb0eebdc946b582f4006d9459251b",
-        "version" : "1.3.1"
+        "revision" : "9644bf81c7f6cf7cb1a0aa7e9e1461d7fc09ae8b",
+        "version" : "1.3.2"
       }
     },
     {
