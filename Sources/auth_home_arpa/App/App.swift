@@ -35,6 +35,9 @@ actor App {
 		}
 
 		// Setup services
+		// TODO: add config for secret
+		// TODO: rotate keys
+		await AuthToken.setupKeys(secret: "secret")
 		let userService = UserService(userConfig: userConfig)
 
 		// Setup Application
