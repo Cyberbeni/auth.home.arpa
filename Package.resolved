@@ -1,5 +1,5 @@
 {
-  "originHash" : "c0dd668db7d86e3abd74832e43a71894d4e337e29c3abe2174985ae4071e3b17",
+  "originHash" : "2e1addff04464c0cdfa0004e828c9561980823b0414951b05fbce5486a9c0e53",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -254,12 +254,12 @@
       }
     },
     {
-      "identity" : "swiftformat",
+      "identity" : "swiftformat-mirror",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/nicklockwood/SwiftFormat",
+      "location" : "https://codeberg.org/Cyberbeni/SwiftFormat-mirror",
       "state" : {
-        "revision" : "fb7ce2e469c18017c92523c93fd3b1b9757a4dd1",
-        "version" : "0.58.7"
+        "revision" : "af6d5e684e6b003ea8b1ce433914eb8435fc42bf",
+        "version" : "0.59.1"
       }
     }
   ],
