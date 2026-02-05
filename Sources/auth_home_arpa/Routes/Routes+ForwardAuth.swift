@@ -4,13 +4,14 @@ import Hummingbird
 extension Router {
 	@discardableResult
 	func addForwardAuthRoutes(userService: UserService) -> Self {
-		let protoHeaderName = HTTPField.Name("X-Forwarded-Proto")
-		let hostHeaderName = HTTPField.Name("X-Forwarded-Host")
-		let uriHeaderName = HTTPField.Name("X-Forwarded-Uri")
-
 		get("api/auth") { request, _ in
+			guard let ip = request.headers[.xForwardedFor] else {
+				return Response(
+					status: .badRequest,
+				)
+			}
 			if let cookie = request.cookies[Constants.cookieName],
-			   userService.checkCookie(cookie.value)
+			   await userService.checkCookie(cookie.value, ip: ip)
 			{
 				return Response(
 					status: .noContent,
@@ -20,12 +21,9 @@ extension Router {
 					let redirectString = request.uri.queryParameters["redirect"],
 					let redirectUrlBase = URL(string: String(redirectString)),
 					var components = URLComponents(url: redirectUrlBase, resolvingAgainstBaseURL: false),
-					let protoHeaderName,
-					let hostHeaderName,
-					let uriHeaderName,
-					let forwardedProto = request.headers[protoHeaderName],
-					let forwardedHost = request.headers[hostHeaderName],
-					let forwardedUri = request.headers[uriHeaderName]
+					let forwardedProto = request.headers[.xForwardedProto],
+					let forwardedHost = request.headers[.xForwardedHost],
+					let forwardedUri = request.headers[.xForwardedUri]
 				else {
 					return Response(
 						status: .badRequest,

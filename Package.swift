@@ -25,6 +25,8 @@ let package = Package(
 		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.18.3"),
 		.package(url: "https://github.com/hummingbird-community/hummingbird-elementary", from: "0.4.2"),
 		.package(url: "https://github.com/sliemeobn/elementary-htmx", from: "0.5.1"),
+		.package(url: "https://github.com/vapor/jwt-kit", from: "5.3.0"),
+		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "1.1.0"),
 		// Plugins:
 		.package(url: "https://codeberg.org/Cyberbeni/SwiftFormat-mirror", from: "0.59.1"),
 	],
@@ -36,8 +38,11 @@ let package = Package(
 				.product(name: "Hummingbird", package: "hummingbird"),
 				.product(name: "HummingbirdElementary", package: "hummingbird-elementary"),
 				.product(name: "ElementaryHTMX", package: "elementary-htmx"),
+				.product(name: "JWTKit", package: "jwt-kit"),
+				.product(name: "LruCache", package: "LruCache"),
 			],
 			swiftSettings: [
+				.unsafeFlags(["-Xfrontend", "-warn-long-expression-type-checking=100"], .when(configuration: .debug)),
 				.unsafeFlags(["-warnings-as-errors"], .when(configuration: .release)),
 				.enableUpcomingFeature("NonisolatedNonsendingByDefault"),
 			],

@@ -19,6 +19,7 @@ services:
       - 9999:9999
   auth:
     build: ..
+    # image: docker.io/cyberbeni/auth.home.arpa
     container_name: auth
     mem_limit: '128m'
     cpus: 1

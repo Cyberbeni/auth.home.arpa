@@ -8,15 +8,11 @@ private struct LoginRequest: Decodable {
 
 extension Router {
 	@discardableResult
-	func addLoginRoutes(userService: UserService) -> Self {
-		let currentUrlHeaderName = HTTPField.Name("Hx-Current-Url")
-		let hxRedirectHeaderName = HTTPField.Name("HX-Redirect")
-
+	func addLoginRoutes(generalConfig: Config.General, userService: UserService) -> Self {
 		post("api/login") { request, context in
 			guard
-				let currentUrlHeaderName,
-				let hxRedirectHeaderName,
-				let currentUrlString = request.headers[currentUrlHeaderName],
+				let ip = request.headers[.xForwardedFor],
+				let currentUrlString = request.headers[.hxCurrentUrl],
 				let currentUrl = URL(string: currentUrlString),
 				let currentUrlComponents = URLComponents(string: currentUrlString),
 				let redirectUrl = currentUrlComponents.queryItems?.first(where: { $0.name == "redirect" })?.value,
@@ -27,7 +23,11 @@ extension Router {
 					status: .badRequest,
 				)
 			}
-			guard var cookie = await userService.checkPassword(user: loginRequest.user, password: loginRequest.password) else {
+			guard var cookie = try await userService.checkPassword(
+				user: loginRequest.user,
+				password: loginRequest.password,
+				ip: ip,
+			) else {
 				// TODO: also update UI
 				return Response(
 					status: .unauthorized,
@@ -43,7 +43,7 @@ extension Router {
 				}
 			}
 			cookie.append("; HttpOnly")
-			cookie.append("; Max-Age=2592000") // 30 days
+			cookie.append("; Max-Age=\(Int(generalConfig.sessionDuration))")
 			cookie.append("; Path=/")
 			if currentUrlString.hasPrefix("https://") {
 				cookie.append("; Secure")
@@ -51,7 +51,7 @@ extension Router {
 			return Response(
 				status: .noContent,
 				headers: [
-					hxRedirectHeaderName: redirectUrl,
+					.hxRedirect: redirectUrl,
 					.setCookie: cookie,
 				],
 			)

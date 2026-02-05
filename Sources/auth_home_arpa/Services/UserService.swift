@@ -1,43 +1,46 @@
-#if canImport(Musl)
-	import Musl
-#elseif canImport(Glibc)
-	import Glibc
-#elseif canImport(Darwin)
-	import Darwin
-#endif
+import LruCache
 
 @globalActor
 actor PasswordHasher {
 	static let shared = PasswordHasher()
 }
 
-nonisolated struct UserService {
+struct UserService {
+	let generalConfig: Config.General
 	let userConfig: Config.User
+	private let cache = LruCache<AuthTokenWrapper>(limit: 32)
 
-	// crypt(...) uses static storage, so usage needs to be isolated
-	@PasswordHasher
-	func checkPassword(user: String, password: String) -> String? {
+	func checkPassword(user: String, password: String, ip: String) async throws -> String? {
 		guard
 			let hashedPassword = userConfig.users[user],
-			let result = crypt(password, hashedPassword).map({ String(cString: $0) }),
+			// crypt(...) uses static storage, so usage needs to be isolated
+			let result = await Task(operation: { @PasswordHasher in
+				return crypt(password, hashedPassword).map { String(cString: $0) }
+			}).value,
 			result == hashedPassword
 		else {
 			return nil
 		}
-		return "\(Constants.cookieName)=\(Data(user.utf8).base64EncodedString()):\(hashedPassword)"
+		let token = AuthToken(
+			sub: .init(value: user),
+			exp: .init(value: Date(timeIntervalSinceNow: generalConfig.sessionDuration)),
+			ip: ip,
+		)
+		do {
+			let jwt = try await token.sign()
+			cache.insert(.success(token), forKey: jwt)
+			return "\(Constants.cookieName)=\(jwt)"
+		} catch {
+			return nil
+		}
 	}
 
-	func checkCookie(_ cookie: String) -> Bool {
-		let cookieComponents = cookie.components(separatedBy: ":")
-		guard
-			cookieComponents.count == 2,
-			let encodedUser = cookieComponents.first,
-			let hashedPassword = cookieComponents.last,
-			let userData = Data(base64Encoded: encodedUser),
-			let user = String(data: userData, encoding: .utf8)
-		else {
+	func checkCookie(_ cookie: String, ip: String) async -> Bool {
+		switch await cache.get(cookie) {
+		case let .success(token):
+			return token.validate(ip: ip)
+		case .failure:
 			return false
 		}
-		return userConfig.users[user] == hashedPassword
 	}
 }
