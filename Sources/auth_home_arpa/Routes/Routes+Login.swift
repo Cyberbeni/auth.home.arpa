@@ -23,7 +23,11 @@ extension Router {
 					status: .badRequest,
 				)
 			}
-			guard var cookie = try await userService.checkPassword(user: loginRequest.user, password: loginRequest.password, ip: ip) else {
+			guard var cookie = try await userService.checkPassword(
+				user: loginRequest.user,
+				password: loginRequest.password,
+				ip: ip,
+			) else {
 				// TODO: also update UI
 				return Response(
 					status: .unauthorized,
