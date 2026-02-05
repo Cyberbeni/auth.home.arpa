@@ -46,7 +46,7 @@ extension Router {
 				}
 			}
 			cookie.append("; HttpOnly")
-			cookie.append("; Max-Age=\(generalConfig.sessionDuration)")
+			cookie.append("; Max-Age=\(Int(generalConfig.sessionDuration))")
 			cookie.append("; Path=/")
 			if currentUrlString.hasPrefix("https://") {
 				cookie.append("; Secure")

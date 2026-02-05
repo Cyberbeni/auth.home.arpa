@@ -1,0 +1,6 @@
+{
+	// Default is 30 days
+	"session_duration": 82800,
+	// Omit to generate a new signing key at every app start
+	"secret": "secret"
+}
