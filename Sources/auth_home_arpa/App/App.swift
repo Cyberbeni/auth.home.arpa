@@ -22,7 +22,17 @@ actor App {
 	func run() async throws {
 		// Parse config
 		let decoder = Config.jsonDecoder()
+		let generalConfig: Config.General
 		let userConfig: Config.User
+
+		do {
+			generalConfig = try decoder.decode(
+				Config.General.self,
+				from: Data(contentsOf: configDir.appending(component: "config.general.json")),
+			)
+		} catch {
+			generalConfig = .default
+		}
 
 		do {
 			userConfig = try decoder.decode(
@@ -35,17 +45,21 @@ actor App {
 		}
 
 		// Setup services
-		// TODO: add config for secret
-		// TODO: rotate keys
-		await AuthToken.setupKeys(secret: "secret")
-		let userService = UserService(userConfig: userConfig)
+		await AuthToken.setupKeys(secret: generalConfig.secret)
+		let userService = UserService(
+			generalConfig: generalConfig,
+			userConfig: userConfig,
+		)
 
 		// Setup Application
 		let router = Router()
 
 		router
 			.addForwardAuthRoutes(userService: userService)
-			.addLoginRoutes(userService: userService)
+			.addLoginRoutes(
+				generalConfig: generalConfig,
+				userService: userService,
+			)
 			.addUiRoutes(staticFilesTimestamp: staticFilesTimestamp)
 
 		router

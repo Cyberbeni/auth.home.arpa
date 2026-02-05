@@ -8,7 +8,7 @@ private struct LoginRequest: Decodable {
 
 extension Router {
 	@discardableResult
-	func addLoginRoutes(userService: UserService) -> Self {
+	func addLoginRoutes(generalConfig: Config.General, userService: UserService) -> Self {
 		let ipHeaderName = HTTPField.Name("X-Forwarded-For")
 		let currentUrlHeaderName = HTTPField.Name("Hx-Current-Url")
 		let hxRedirectHeaderName = HTTPField.Name("HX-Redirect")
@@ -46,7 +46,7 @@ extension Router {
 				}
 			}
 			cookie.append("; HttpOnly")
-			cookie.append("; Max-Age=2592000") // 30 days
+			cookie.append("; Max-Age=\(generalConfig.sessionDuration)")
 			cookie.append("; Path=/")
 			if currentUrlString.hasPrefix("https://") {
 				cookie.append("; Secure")

@@ -10,9 +10,10 @@ struct AuthToken: JWTPayload {
 
 	func verify(using _: some JWTAlgorithm) async throws {}
 
-	static func setupKeys(secret: HMACKey?) async {
+	static func setupKeys(secret: String?) async {
+		// TODO: rotate keys automatically
 		if let secret {
-			await AuthToken.keys.add(hmac: secret, digestAlgorithm: .sha256)
+			await AuthToken.keys.add(hmac: HMACKey(from: secret), digestAlgorithm: .sha256)
 		} else {
 			do {
 				try await AuthToken.keys.add(eddsa: EdDSA.PrivateKey())

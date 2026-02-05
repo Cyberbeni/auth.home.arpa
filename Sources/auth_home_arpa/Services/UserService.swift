@@ -6,12 +6,9 @@ actor PasswordHasher {
 }
 
 struct UserService {
-	private let userConfig: Config.User
+	let generalConfig: Config.General
+	let userConfig: Config.User
 	private let cache = LruCache<AuthTokenWrapper>(limit: 32)
-
-	init(userConfig: Config.User) {
-		self.userConfig = userConfig
-	}
 
 	func checkPassword(user: String, password: String, ip: String) async throws -> String? {
 		guard
@@ -24,8 +21,11 @@ struct UserService {
 		else {
 			return nil
 		}
-		// TODO: add config to set expiration
-		let token = AuthToken(sub: .init(value: user), exp: .init(value: .init(timeIntervalSinceNow: 2_592_000)), ip: ip)
+		let token = AuthToken(
+			sub: .init(value: user),
+			exp: .init(value: Date(timeIntervalSinceNow: generalConfig.sessionDuration)),
+			ip: ip,
+		)
 		do {
 			let jwt = try await token.sign()
 			cache.insert(.success(token), forKey: jwt)
