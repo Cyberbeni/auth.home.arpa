@@ -1,8 +1,9 @@
 import LruCache
 
 @globalActor
-actor PasswordHasher {
+private actor PasswordHasher {
 	static let shared = PasswordHasher()
+	private init() {}
 }
 
 struct UserService {
@@ -10,7 +11,7 @@ struct UserService {
 	let userConfig: Config.User
 	private let cache = LruCache<AuthTokenWrapper>(limit: 32)
 
-	func checkPassword(user: String, password: String, ip: String) async throws -> String? {
+	func checkPassword(user: String, password: String, ip: String) async -> String? {
 		guard
 			let hashedPassword = userConfig.users[user],
 			// crypt(...) uses static storage, so usage needs to be isolated

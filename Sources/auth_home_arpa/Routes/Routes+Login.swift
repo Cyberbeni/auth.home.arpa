@@ -23,7 +23,7 @@ extension Router {
 					status: .badRequest,
 				)
 			}
-			guard var cookie = try await userService.checkPassword(
+			guard var cookie = await userService.checkPassword(
 				user: loginRequest.user,
 				password: loginRequest.password,
 				ip: ip,
@@ -35,6 +35,7 @@ extension Router {
 			}
 			if let host = currentUrl.host {
 				let ipRegex = /^(?:(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\.(?!$)|$)){4}$/
+					.repetitionBehavior(.possessive)
 				if host.firstMatch(of: ipRegex) == nil,
 				   case let hostComponents = host.components(separatedBy: "."),
 				   hostComponents.count > 2
@@ -45,7 +46,7 @@ extension Router {
 			cookie.append("; HttpOnly")
 			cookie.append("; Max-Age=\(Int(generalConfig.sessionDuration))")
 			cookie.append("; Path=/")
-			if currentUrlString.hasPrefix("https://") {
+			if currentUrl.scheme == "https" {
 				cookie.append("; Secure")
 			}
 			return Response(
