@@ -1,5 +1,7 @@
 {
-	// Default is 30 days
+	// Default is false
+	"session_cookie": true,
+	// Default is 23 hours when session_cookie == true, 30 days otherwise
 	"session_duration": 82800,
 	// Omit to generate a new signing key at every app start
 	"secret": "secret"
