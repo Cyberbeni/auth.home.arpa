@@ -44,7 +44,9 @@ extension Router {
 				}
 			}
 			cookie.append("; HttpOnly")
-			cookie.append("; Max-Age=\(Int(generalConfig.sessionDuration))")
+			if !generalConfig.sessionCookie {
+				cookie.append("; Max-Age=\(Int(generalConfig.sessionDuration))")
+			}
 			cookie.append("; Path=/")
 			if currentUrl.scheme == "https" {
 				cookie.append("; Secure")

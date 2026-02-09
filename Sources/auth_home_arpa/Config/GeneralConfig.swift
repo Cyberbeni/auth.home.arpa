@@ -1,15 +1,17 @@
 extension Config {
 	struct General: Decodable {
 		static var `default`: Self {
-			.init(_sessionDuration: nil, secret: nil)
+			.init(_sessionCookie: nil, _sessionDuration: nil, secret: nil)
 		}
 
+		private let _sessionCookie: Bool?
+		var sessionCookie: Bool { _sessionCookie ?? false }
 		private let _sessionDuration: TimeInterval?
 		var sessionDuration: TimeInterval {
 			max(
-				(23 * 3600) as TimeInterval,
+				(15 * 60) as TimeInterval,
 				min(
-					_sessionDuration ?? (30 * 24 * 3600) as TimeInterval,
+					_sessionDuration ?? (sessionCookie ? 23 * 3600 : 30 * 24 * 3600) as TimeInterval,
 					(180 * 24 * 3600) as TimeInterval,
 				),
 			)
@@ -18,6 +20,7 @@ extension Config {
 		let secret: String?
 
 		enum CodingKeys: String, CodingKey {
+			case _sessionCookie = "sessionCookie"
 			case _sessionDuration = "sessionDuration"
 			case secret
 		}
