@@ -44,4 +44,13 @@ struct UserService {
 			return false
 		}
 	}
+
+	func authToken(_ cookie: String) async -> AuthToken? {
+		switch await cache.get(cookie) {
+		case let .success(token):
+			return token
+		case .failure:
+			return nil
+		}
+	}
 }

@@ -60,7 +60,10 @@ actor App {
 				generalConfig: generalConfig,
 				userService: userService,
 			)
-			.addUiRoutes(staticFilesTimestamp: staticFilesTimestamp)
+			.addUiRoutes(
+				staticFilesTimestamp: staticFilesTimestamp,
+				userService: userService,
+			)
 
 		router
 			.add(middleware: FileMiddleware("/data/public", urlBasePath: "/" + staticFilesTimestamp, cacheControl: .init([
