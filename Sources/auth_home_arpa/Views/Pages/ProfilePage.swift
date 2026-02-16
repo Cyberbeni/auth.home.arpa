@@ -2,6 +2,7 @@ import Elementary
 
 struct ProfilePage: HTMLDocument {
 	let staticFilesTimestamp: String
+	let invalidCookie: Bool
 	let authToken: AuthToken?
 	let ip: String
 
@@ -14,7 +15,9 @@ struct ProfilePage: HTMLDocument {
 	}
 
 	var body: some HTML {
-		if let authToken {
+		if invalidCookie {
+			div { "Invalid cookie" }
+		} else if let authToken {
 			div { "Cookie:" }
 			div { "- user: \(authToken.sub.value)" }
 			div { "- expiration: \(authToken.exp.value.ISO8601Format(.init(timeZone: .current)))" }
