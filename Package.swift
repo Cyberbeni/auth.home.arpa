@@ -24,9 +24,9 @@ let package = Package(
 		.package(url: "https://codeberg.org/Cyberbeni/CBLogging", from: "1.3.2", traits: []),
 		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.18.3"),
 		.package(url: "https://github.com/hummingbird-community/hummingbird-elementary", from: "0.4.2"),
-		.package(url: "https://github.com/sliemeobn/elementary-htmx", from: "0.5.1"),
+		.package(url: "https://github.com/elementary-swift/elementary-htmx", from: "0.5.1"),
 		.package(url: "https://github.com/vapor/jwt-kit", from: "5.3.0"),
-		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "1.1.0"),
+		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "1.1.1"),
 		// Plugins:
 		.package(url: "https://codeberg.org/Cyberbeni/SwiftFormat-mirror", from: "0.59.1"),
 	],

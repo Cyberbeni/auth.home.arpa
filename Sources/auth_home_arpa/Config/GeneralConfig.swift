@@ -11,7 +11,9 @@ extension Config {
 			max(
 				(15 * 60) as TimeInterval,
 				min(
-					_sessionDuration ?? (sessionCookie ? 23 * 3600 : 30 * 24 * 3600) as TimeInterval,
+					_sessionDuration ?? (sessionCookie
+						? (23 * 3600) as TimeInterval
+						: (30 * 24 * 3600) as TimeInterval),
 					(180 * 24 * 3600) as TimeInterval,
 				),
 			)
