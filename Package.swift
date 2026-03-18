@@ -3,14 +3,6 @@
 
 import PackageDescription
 
-#if canImport(Glibc)
-	let extraLinkerSettings: [LinkerSetting] = [
-		.unsafeFlags(["-lcrypt"]),
-	]
-#else
-	let extraLinkerSettings: [LinkerSetting] = []
-#endif
-
 let package = Package(
 	name: "auth_home_arpa",
 	platforms: [.macOS(.v26)],
@@ -27,6 +19,8 @@ let package = Package(
 		.package(url: "https://github.com/elementary-swift/elementary-htmx", from: "0.5.1"),
 		.package(url: "https://github.com/vapor/jwt-kit", from: "5.3.0"),
 		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "1.1.1"),
+		// macOS only:
+		.package(url: "https://github.com/hummingbird-project/hummingbird-auth", from: "2.1.0"),
 		// Plugins:
 		.package(url: "https://codeberg.org/Cyberbeni/SwiftFormat-mirror", from: "0.59.1"),
 	],
@@ -40,6 +34,8 @@ let package = Package(
 				.product(name: "ElementaryHTMX", package: "elementary-htmx"),
 				.product(name: "JWTKit", package: "jwt-kit"),
 				.product(name: "LruCache", package: "LruCache"),
+				// macOS only:
+				.product(name: "HummingbirdBcrypt", package: "hummingbird-auth", condition: .when(platforms: [.macOS])),
 			],
 			swiftSettings: [
 				.unsafeFlags(["-Xfrontend", "-warn-long-expression-type-checking=100"], .when(configuration: .debug)),
@@ -48,7 +44,9 @@ let package = Package(
 			],
 			linkerSettings: [
 				.unsafeFlags(["-Xlinker", "-s"], .when(configuration: .release)), // STRIP_STYLE = all
-			] + extraLinkerSettings,
+				// FIXME: This is not needed when using Musl SDK
+				.unsafeFlags(["-lcrypt"], .when(platforms: [.linux])),
+			],
 		),
 	],
 )
