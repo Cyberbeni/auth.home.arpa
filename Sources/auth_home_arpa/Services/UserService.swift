@@ -1,10 +1,5 @@
+import HummingbirdBcrypt
 import LruCache
-
-@globalActor
-private actor PasswordHasher {
-	static let shared = PasswordHasher()
-	private init() {}
-}
 
 struct UserService {
 	let generalConfig: Config.General
@@ -14,11 +9,7 @@ struct UserService {
 	func checkPassword(user: String, password: String, ip: String) async -> String? {
 		guard
 			let hashedPassword = userConfig.users[user],
-			// crypt(...) uses static storage, so usage needs to be isolated
-			let result = await Task(operation: { @PasswordHasher in
-				return crypt(password, hashedPassword).map { String(cString: $0) }
-			}).value,
-			result == hashedPassword
+			Bcrypt.verify(password, hash: hashedPassword)
 		else {
 			return nil
 		}

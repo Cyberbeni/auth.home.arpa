@@ -3,14 +3,6 @@
 
 import PackageDescription
 
-#if canImport(Glibc)
-	let extraLinkerSettings: [LinkerSetting] = [
-		.unsafeFlags(["-lcrypt"]),
-	]
-#else
-	let extraLinkerSettings: [LinkerSetting] = []
-#endif
-
 let package = Package(
 	name: "auth_home_arpa",
 	platforms: [.macOS(.v26)],
@@ -25,6 +17,7 @@ let package = Package(
 		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.18.3"),
 		.package(url: "https://github.com/hummingbird-community/hummingbird-elementary", from: "0.4.2"),
 		.package(url: "https://github.com/elementary-swift/elementary-htmx", from: "0.5.1"),
+		.package(url: "https://github.com/hummingbird-project/hummingbird-auth", from: "2.1.0"),
 		.package(url: "https://github.com/vapor/jwt-kit", from: "5.3.0"),
 		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "1.1.1"),
 		// Plugins:
@@ -38,6 +31,7 @@ let package = Package(
 				.product(name: "Hummingbird", package: "hummingbird"),
 				.product(name: "HummingbirdElementary", package: "hummingbird-elementary"),
 				.product(name: "ElementaryHTMX", package: "elementary-htmx"),
+				.product(name: "HummingbirdBcrypt", package: "hummingbird-auth"),
 				.product(name: "JWTKit", package: "jwt-kit"),
 				.product(name: "LruCache", package: "LruCache"),
 			],
@@ -48,7 +42,7 @@ let package = Package(
 			],
 			linkerSettings: [
 				.unsafeFlags(["-Xlinker", "-s"], .when(configuration: .release)), // STRIP_STYLE = all
-			] + extraLinkerSettings,
+			],
 		),
 	],
 )
