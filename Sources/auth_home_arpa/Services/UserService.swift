@@ -1,14 +1,5 @@
+import HummingbirdBcrypt
 import LruCache
-
-#if canImport(Darwin)
-	import HummingbirdBcrypt
-#endif
-
-@globalActor
-private actor PasswordHasher {
-	static let shared = PasswordHasher()
-	private init() {}
-}
 
 struct UserService {
 	let generalConfig: Config.General
@@ -16,25 +7,12 @@ struct UserService {
 	private let cache = LruCache<AuthTokenWrapper>(limit: 32)
 
 	func checkPassword(user: String, password: String, ip: String) async -> String? {
-		#if canImport(Darwin)
-			guard
-				let hashedPassword = userConfig.users[user],
-				Bcrypt.verify(password, hash: hashedPassword)
-			else {
-				return nil
-			}
-		#else
-			guard
-				let hashedPassword = userConfig.users[user],
-				// crypt(...) uses static storage, so usage needs to be isolated
-				let result = await Task(operation: { @PasswordHasher in
-					return crypt(password, hashedPassword).map { String(cString: $0) }
-				}).value,
-				result == hashedPassword
-			else {
-				return nil
-			}
-		#endif
+		guard
+			let hashedPassword = userConfig.users[user],
+			Bcrypt.verify(password, hash: hashedPassword)
+		else {
+			return nil
+		}
 		let token = AuthToken(
 			sub: .init(value: user),
 			exp: .init(value: Date(timeIntervalSinceNow: generalConfig.sessionDuration)),
