@@ -42,8 +42,6 @@ let package = Package(
 			],
 			linkerSettings: [
 				.unsafeFlags(["-Xlinker", "-s"], .when(configuration: .release)), // STRIP_STYLE = all
-				// FIXME: This is not needed when using Musl SDK
-				.unsafeFlags(["-lcrypt"], .when(platforms: [.linux])),
 			],
 		),
 	],

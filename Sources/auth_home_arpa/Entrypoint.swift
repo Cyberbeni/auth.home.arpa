@@ -4,13 +4,6 @@ import CBLogging
 #else
 	@_exported import Foundation
 #endif
-#if canImport(Musl)
-	@_exported import Musl
-#elseif canImport(Glibc)
-	@_exported import Glibc
-#elseif canImport(Darwin)
-	@_exported import Darwin
-#endif
 
 var Log: Logger { CBLogHandler.appLogger }
 
