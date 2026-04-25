@@ -1,4 +1,3 @@
-import HTTPTypes
 import Hummingbird
 
 extension Router {
