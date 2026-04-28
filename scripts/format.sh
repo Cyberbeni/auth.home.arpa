@@ -22,7 +22,7 @@ do_it() {
 		esac
 	done
 
-	SWIFTFORMAT="./.build/debug/swiftformat"
+	SWIFTFORMAT="./.build/out/Products/Debug-linux/swiftformat"
 	CACHE="./.build/swiftformat-cache.json"
 
 	# Replicate `make` behaviour in docker, `swift build` can easily take 5+ seconds even when no operations are needed.
@@ -38,7 +38,8 @@ do_it() {
 		fi
 	fi
 	if (( NEEDS_REBUILD != 0 )); then
-		swift build --product swiftformat
+		swift build --product swiftformat \
+			--build-system swiftbuild
 		touch "$SWIFTFORMAT"
 	fi
 	if (( DO_LINT != 0 )); then
