@@ -1,5 +1,5 @@
 {
-  "originHash" : "b7fd5e0efbf11878daef68adc0a969b71914007679bed49534dbb9fb86a5331d",
+  "originHash" : "7da30a785e7619baad26424a0a8b7e44f1d70a284b866035558be836b1131433",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://codeberg.org/Cyberbeni/CBLogging",
       "state" : {
-        "revision" : "8d4e7a827e70d348daa208d62c8d332971802b2d",
-        "version" : "1.4.1"
+        "revision" : "0013c6762105c812f41795283f48fac4dbc83b7a",
+        "version" : "1.4.2"
       }
     },
     {
@@ -69,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/jwt-kit",
       "state" : {
-        "revision" : "aa60a211797306bfb05b752ad7b4bf9f0b50d898",
-        "version" : "5.4.0"
+        "revision" : "94a8b96d0ab5aae91324b68f100e3670cd908b51",
+        "version" : "5.4.1"
       }
     },
     {
