@@ -34,6 +34,7 @@ let package = Package(
 				.product(name: "HummingbirdBcrypt", package: "hummingbird-auth"),
 				.product(name: "JWTKit", package: "jwt-kit"),
 				.product(name: "LruCache", package: "LruCache"),
+				.targetItem(name: "Foundation", condition: .when(platforms: [.linux])),
 			],
 			swiftSettings: [
 				.unsafeFlags(["-Xfrontend", "-warn-long-expression-type-checking=100"], .when(configuration: .debug)),
@@ -44,5 +45,6 @@ let package = Package(
 				.unsafeFlags(["-Xlinker", "-s"], .when(configuration: .release)), // STRIP_STYLE = all
 			],
 		),
+		.target(name: "Foundation"),
 	],
 )
