@@ -70,6 +70,11 @@ actor App {
 				(MediaType(type: .any), .publicImmutable),
 			])))
 
+		do {
+			try FileManager.default.removeItem(atPath: socketPath)
+		} catch {
+			Log.debug("Failed to remove old socket: \(error)")
+		}
 		let app = Application(
 			router: router,
 			configuration: ApplicationConfiguration(address: .unixDomainSocket(path: socketPath)),

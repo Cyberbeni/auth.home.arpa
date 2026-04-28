@@ -13,7 +13,7 @@ let package = Package(
 		),
 	],
 	dependencies: [
-		.package(url: "https://codeberg.org/Cyberbeni/CBLogging", from: "1.3.2", traits: []),
+		.package(url: "https://codeberg.org/Cyberbeni/CBLogging", from: "1.4.1"),
 		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.18.3"),
 		.package(url: "https://github.com/hummingbird-community/hummingbird-elementary", from: "0.4.2"),
 		.package(url: "https://github.com/elementary-swift/elementary-htmx", from: "0.5.1"),
@@ -37,7 +37,7 @@ let package = Package(
 			],
 			swiftSettings: [
 				.unsafeFlags(["-Xfrontend", "-warn-long-expression-type-checking=100"], .when(configuration: .debug)),
-				.unsafeFlags(["-warnings-as-errors"], .when(configuration: .release)),
+				.treatAllWarnings(as: .error, .when(configuration: .release)),
 				.enableUpcomingFeature("NonisolatedNonsendingByDefault"),
 			],
 			linkerSettings: [
