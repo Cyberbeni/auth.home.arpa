@@ -2,7 +2,7 @@ import Hummingbird
 
 extension Router {
 	@discardableResult
-	func addForwardAuthRoutes(userService: UserService) -> Self {
+	func addForwardAuthRoute(userService: UserService) -> Self {
 		get("api/auth") { request, _ in
 			guard let ip = request.headers[.xForwardedFor] else {
 				return Response(

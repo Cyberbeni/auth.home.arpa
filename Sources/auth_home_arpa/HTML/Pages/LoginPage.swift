@@ -2,9 +2,10 @@ import Elementary
 import ElementaryHTMX
 
 struct LoginPage: HTMLDocument {
+	let generalConfig: Config.General
 	let staticFilesTimestamp: String
 
-	var title: String { "Login" }
+	var title: String { "\(generalConfig.title) - Login" }
 
 	var lang: String { "en" }
 
@@ -13,7 +14,7 @@ struct LoginPage: HTMLDocument {
 	}
 
 	var body: some HTML {
-		form(.hx.post("/api/login")) {
+		form(.class("login-form"), .hx.post("/api/login")) {
 			table {
 				tr {
 					td {

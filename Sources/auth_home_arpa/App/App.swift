@@ -55,12 +55,14 @@ actor App {
 		let router = Router()
 
 		router
-			.addForwardAuthRoutes(userService: userService)
-			.addLoginRoutes(
+			.addHashPasswordRoute()
+			.addForwardAuthRoute(userService: userService)
+			.addLoginRoute(
 				generalConfig: generalConfig,
 				userService: userService,
 			)
 			.addUiRoutes(
+				generalConfig: generalConfig,
 				staticFilesTimestamp: staticFilesTimestamp,
 				userService: userService,
 			)

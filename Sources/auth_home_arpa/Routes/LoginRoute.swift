@@ -7,7 +7,7 @@ private struct LoginRequest: Decodable {
 
 extension Router {
 	@discardableResult
-	func addLoginRoutes(generalConfig: Config.General, userService: UserService) -> Self {
+	func addLoginRoute(generalConfig: Config.General, userService: UserService) -> Self {
 		post("api/login") { request, context in
 			guard
 				let ip = request.headers[.xForwardedFor],
