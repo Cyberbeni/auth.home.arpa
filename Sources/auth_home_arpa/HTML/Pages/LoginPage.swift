@@ -2,9 +2,10 @@ import Elementary
 import ElementaryHTMX
 
 struct LoginPage: HTMLDocument {
+	let generalConfig: Config.General
 	let staticFilesTimestamp: String
 
-	var title: String { "Login" }
+	var title: String { "\(generalConfig.title) - Login" }
 
 	var lang: String { "en" }
 

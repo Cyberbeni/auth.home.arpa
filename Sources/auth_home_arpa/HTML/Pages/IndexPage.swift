@@ -1,12 +1,13 @@
 import Elementary
 
 struct IndexPage: HTMLDocument {
+	let generalConfig: Config.General
 	let staticFilesTimestamp: String
 	let invalidCookie: Bool
 	let authToken: AuthToken?
 	let ip: String
 
-	var title: String { "Profile" }
+	var title: String { generalConfig.title }
 
 	var lang: String { "en" }
 

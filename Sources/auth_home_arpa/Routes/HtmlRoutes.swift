@@ -4,6 +4,7 @@ import HummingbirdElementary
 extension Router {
 	@discardableResult
 	func addUiRoutes(
+		generalConfig: Config.General,
 		staticFilesTimestamp: String,
 		userService: UserService,
 	) -> Self {
@@ -19,6 +20,7 @@ extension Router {
 			}
 			return HTMLResponse {
 				IndexPage(
+					generalConfig: generalConfig,
 					staticFilesTimestamp: staticFilesTimestamp,
 					invalidCookie: invalidCookie,
 					authToken: authToken,
@@ -30,6 +32,7 @@ extension Router {
 		get("login.html") { _, _ in
 			HTMLResponse {
 				LoginPage(
+					generalConfig: generalConfig,
 					staticFilesTimestamp: staticFilesTimestamp,
 				)
 			}

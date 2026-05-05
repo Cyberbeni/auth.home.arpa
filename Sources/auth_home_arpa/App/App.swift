@@ -62,6 +62,7 @@ actor App {
 				userService: userService,
 			)
 			.addUiRoutes(
+				generalConfig: generalConfig,
 				staticFilesTimestamp: staticFilesTimestamp,
 				userService: userService,
 			)

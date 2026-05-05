@@ -1,4 +1,6 @@
 {
+	// Default is "SSO"
+	"title": "My Home Server SSO",
 	// Default is false
 	"session_cookie": true,
 	// Default is 23 hours when session_cookie == true, 30 days otherwise
