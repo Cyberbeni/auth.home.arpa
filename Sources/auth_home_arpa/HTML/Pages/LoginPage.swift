@@ -13,7 +13,7 @@ struct LoginPage: HTMLDocument {
 	}
 
 	var body: some HTML {
-		form(.hx.post("/api/login")) {
+		form(.class("login-form"), .hx.post("/api/login")) {
 			table {
 				tr {
 					td {

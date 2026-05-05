@@ -18,7 +18,7 @@ extension Router {
 				invalidCookie = false
 			}
 			return HTMLResponse {
-				ProfilePage(
+				IndexPage(
 					staticFilesTimestamp: staticFilesTimestamp,
 					invalidCookie: invalidCookie,
 					authToken: authToken,

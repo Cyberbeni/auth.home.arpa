@@ -1,18 +1,9 @@
 import Elementary
 
-struct ProfilePage: HTMLDocument {
-	let staticFilesTimestamp: String
+struct ProfileView: HTML {
 	let invalidCookie: Bool
 	let authToken: AuthToken?
 	let ip: String
-
-	var title: String { "Profile" }
-
-	var lang: String { "en" }
-
-	var head: some HTML {
-		DefaultHtmlHead(staticFilesTimestamp: staticFilesTimestamp)
-	}
 
 	var body: some HTML {
 		if invalidCookie {
