@@ -5,6 +5,7 @@ struct ForbiddenPage: HTMLDocument {
 	let generalConfig: Config.General
 	let staticFilesTimestamp: String
 	let baseUrl: String
+	let loginUrl: String
 	let requiredRole: String?
 
 	var title: String { "\(generalConfig.title) - Forbidden" }
@@ -19,6 +20,8 @@ struct ForbiddenPage: HTMLDocument {
 	var body: some HTML {
 		div { "403 Forbidden" }
 		div { "Required role: \(requiredRole, default: "-")" }
-		// TODO: sign in with different user button
+		a(.href(loginUrl)) {
+			button { "Login with a different user" }
+		}
 	}
 }

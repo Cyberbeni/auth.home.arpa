@@ -16,7 +16,10 @@ input {
 	min-height: 26px;
 }
 
-#submit-button {
-	width: 100%;
+button, input[type=submit] {
 	min-height: 32px;
+}
+
+#login-button {
+	width: 100%;
 }

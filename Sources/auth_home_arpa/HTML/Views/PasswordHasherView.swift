@@ -27,7 +27,7 @@ struct PasswordHasherView: HTML {
 				}
 				tr {
 					td(.init(name: "colspan", value: "2")) {
-						input(.type(.submit), .value("Generate hash"), .id("submit-button"))
+						input(.type(.submit), .value("Generate hash"))
 					}
 				}
 				tr {
