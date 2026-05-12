@@ -15,7 +15,7 @@ extension Router {
 	) -> Self {
 		get("api/auth") { request, context throws(Never) in
 			guard let ip = request.headers[.xForwardedFor],
-			      let authRequest = try? URLEncodedFormDecoder().decode(AuthRequest.self, from: request.uri.query ?? ""),
+			      let authRequest = try? request.uri.decodeQuery(as: AuthRequest.self, context: context),
 			      let redirectUrlBase = URL(string: authRequest.redirect),
 			      var components = URLComponents(url: redirectUrlBase, resolvingAgainstBaseURL: false),
 			      let forwardedProto = request.headers[.xForwardedProto],
