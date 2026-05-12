@@ -6,6 +6,12 @@
 
 --enable isEmpty
 
---disable conditionalAssignment, wrapFunctionBodies, wrapPropertyBodies, docComments, swiftTestingTestCaseNames
+--disable \
+	conditionalAssignment, \
+	wrapFunctionBodies, \
+	wrapPropertyBodies, \
+	docComments, \
+	swiftTestingTestCaseNames, \
+	redundantTypedThrows
 
 --lintonly unusedArguments

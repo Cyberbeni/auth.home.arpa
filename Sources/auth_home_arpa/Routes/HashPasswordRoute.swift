@@ -8,7 +8,7 @@ private struct HashPasswordRequest: Decodable {
 extension Router {
 	@discardableResult
 	func addHashPasswordRoute() -> Self {
-		post("api/hash-password") { request, context in
+		post("api/hash-password") { request, context throws(Never) in
 			guard
 				let hashPasswordRequest = try? await URLEncodedFormDecoder().decode(HashPasswordRequest.self, from: request, context: context)
 			else {

@@ -2,6 +2,13 @@
 	"users": {
 		// Password has to be hashed with Bcrypt, visit path "/" of auth.home.arpa to generate hash from password
 		// admin/admin
-		"admin": "$2b$12$lSgiPFq0jNyKIM6/KG3XNuTMxFQGAU9aNTEFjWkQWQbvsdbPdN5Ve"
+		"admin": {
+			"password": "$2b$12$lSgiPFq0jNyKIM6/KG3XNuTMxFQGAU9aNTEFjWkQWQbvsdbPdN5Ve",
+			"roles": [
+				"admin"
+			]
+		},
+		// user/user
+		"user": "$2b$12$91ZESNmgr9SlatBrSK0LleX6A3QmsIc5Eo.YgVsFULNoLHEt6ZqTS"
 	}
 }

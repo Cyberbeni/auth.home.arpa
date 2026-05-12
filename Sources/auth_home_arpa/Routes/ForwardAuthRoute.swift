@@ -1,24 +1,51 @@
 import Hummingbird
+import HummingbirdElementary
+
+private struct AuthRequest: Decodable {
+	let redirect: String
+	let role: String?
+}
 
 extension Router {
 	@discardableResult
-	func addForwardAuthRoute(userService: UserService) -> Self {
-		get("api/auth") { request, _ in
-			guard let ip = request.headers[.xForwardedFor] else {
+	func addForwardAuthRoute(
+		generalConfig: Config.General,
+		staticFilesTimestamp: String,
+		userService: UserService,
+	) -> Self {
+		get("api/auth") { request, context throws(Never) in
+			guard let ip = request.headers[.xForwardedFor],
+			      let authRequest = try? URLEncodedFormDecoder().decode(AuthRequest.self, from: request.uri.query ?? "")
+			else {
 				return Response(
 					status: .badRequest,
 				)
 			}
-			if let cookie = request.cookies[Constants.cookieName],
-			   await userService.checkCookie(cookie.value, ip: ip)
-			{
+			let checkCookieResult: UserService.CheckCookieResult
+			if let cookie = request.cookies[Constants.cookieName] {
+				checkCookieResult = await userService.checkCookie(cookie.value, ip: ip, role: authRequest.role)
+			} else {
+				checkCookieResult = .invalidOrMissing
+			}
+			switch checkCookieResult {
+			case .ok:
 				return Response(
 					status: .noContent,
 				)
-			} else {
+			case .notInGroup:
+				return HTMLResponse(
+					status: .forbidden,
+				) {
+					ForbiddenPage(
+						generalConfig: generalConfig,
+						staticFilesTimestamp: staticFilesTimestamp,
+						baseUrl: authRequest.redirect,
+						requiredRole: authRequest.role,
+					)
+				}.response(from: request, context: context)
+			case .invalidOrMissing:
 				guard
-					let redirectString = request.uri.queryParameters["redirect"],
-					let redirectUrlBase = URL(string: String(redirectString)),
+					let redirectUrlBase = URL(string: authRequest.redirect),
 					var components = URLComponents(url: redirectUrlBase, resolvingAgainstBaseURL: false),
 					let forwardedProto = request.headers[.xForwardedProto],
 					let forwardedHost = request.headers[.xForwardedHost],
