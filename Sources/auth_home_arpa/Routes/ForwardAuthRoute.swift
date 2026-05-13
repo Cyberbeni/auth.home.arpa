@@ -44,7 +44,7 @@ extension Router {
 				return Response(
 					status: .noContent,
 				)
-			case .notInGroup:
+			case .missingRole:
 				return HTMLResponse(
 					status: .forbidden,
 				) {

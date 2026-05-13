@@ -4,7 +4,7 @@ import LruCache
 struct UserService {
 	enum CheckCookieResult {
 		case ok
-		case notInGroup
+		case missingRole
 		case invalidOrMissing
 	}
 
@@ -45,7 +45,7 @@ struct UserService {
 				{
 					return .ok
 				} else {
-					return .notInGroup
+					return .missingRole
 				}
 			} else {
 				return .ok
