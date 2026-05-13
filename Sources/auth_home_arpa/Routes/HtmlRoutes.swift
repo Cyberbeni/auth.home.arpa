@@ -8,7 +8,7 @@ extension Router {
 		staticFilesTimestamp: String,
 		userService: UserService,
 	) -> Self {
-		get("") { request, _ in
+		get("") { request, _ throws(Never) in
 			let authToken: AuthToken?
 			let invalidCookie: Bool
 			if let cookie = request.cookies[Constants.cookieName] {
@@ -29,7 +29,7 @@ extension Router {
 			}
 		}
 
-		get("login.html") { _, _ in
+		get("login.html") { _, _ throws(Never) in
 			HTMLResponse {
 				LoginPage(
 					generalConfig: generalConfig,

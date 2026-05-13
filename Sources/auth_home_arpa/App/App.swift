@@ -56,7 +56,11 @@ actor App {
 
 		router
 			.addHashPasswordRoute()
-			.addForwardAuthRoute(userService: userService)
+			.addForwardAuthRoute(
+				generalConfig: generalConfig,
+				staticFilesTimestamp: staticFilesTimestamp,
+				userService: userService,
+			)
 			.addLoginRoute(
 				generalConfig: generalConfig,
 				userService: userService,

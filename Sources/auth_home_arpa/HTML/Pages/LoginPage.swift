@@ -51,7 +51,7 @@ struct LoginPage: HTMLDocument {
 				}
 				tr {
 					td(.init(name: "colspan", value: "2")) {
-						input(.type(.submit), .value("Login"), .id("submit-button"))
+						input(.type(.submit), .value("Login"), .id("login-button"))
 					}
 				}
 			}

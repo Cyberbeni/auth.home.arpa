@@ -33,6 +33,16 @@ auth.test.home.arpa {
 }
 
 # args:
+# 0: redirect url
+# 1: role
+(forward_auth_role) {
+	forward_auth unix//socket/auth.sock {
+		uri /api/auth?redirect={args[0]}&role={args[1]}
+		header_up -Connection
+	}
+}
+
+# args:
 # 0: subdomain
 # 1: outside port
 # 2: inside address
@@ -60,5 +70,21 @@ auth.test.home.arpa {
 	}
 }
 
-import auth_routing vscodium 80 vscodium:8000
+# args:
+# 0: subdomain
+# 1: outside port
+# 2: inside address
+# 3: role
+(auth_routing_role) {
+	:{args[1]} {
+		import forward_auth_role http://{host}:9999 {args[3]}
+		reverse_proxy {args[2]}
+	}
+	{args[0]}.test.home.arpa {
+		import forward_auth_role https://auth.test.home.arpa {args[3]}
+		reverse_proxy {args[2]}
+	}
+}
+
+import auth_routing_role vscodium 80 vscodium:8000 admin
 import auth_routing vscodium2 8080 vscodium:8000
