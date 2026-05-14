@@ -1,7 +1,7 @@
 {
-  "name": "index.htmx",
+  "name": "auth.home.arpa",
   "version": "0.0.0",
-  "description": "Lightweight server-side rendered dashboard.",
+  "description": "Minimal forward_auth service for Caddy and other reverse proxies.",
   "author": "Benedek Kozma",
   "license": "MIT",
   "dependencies": {
