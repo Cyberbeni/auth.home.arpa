@@ -11,15 +11,9 @@
 .login-form {
 	position: absolute;
 	top: 50%;
-	@media (min-width: 576px) {
-		left: 50%;
-		-webkit-transform: translate(-50%, -50%);
-		transform: translate(-50%, -50%);
-	}
-	@media not (min-width: 576px) {
-		-webkit-transform: translateY(-50%);
-		transform: translateY(-50%);
-	}
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 }
 
 .grid {
@@ -30,8 +24,8 @@
 		width: min-content;
 	}
 	@media not (min-width: 576px) {
-		width: calc(100% - 1.75rem);
-		padding: 0.375rem;
+		width: calc(100% - 0.75rem);
+		padding: 0.375rem 0;
 	}
 }
 
