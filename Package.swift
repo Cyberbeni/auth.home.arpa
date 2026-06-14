@@ -13,15 +13,15 @@ let package = Package(
 		),
 	],
 	dependencies: [
-		.package(url: "https://codeberg.org/Cyberbeni/CBLogging", from: "1.4.1"),
-		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.18.3"),
+		.package(url: "https://codeberg.org/Cyberbeni/CBLogging", from: "1.4.2"),
+		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.25.0"),
 		.package(url: "https://github.com/hummingbird-community/hummingbird-elementary", from: "0.5.1"),
 		.package(url: "https://github.com/elementary-swift/elementary-htmx", from: "0.5.1"),
-		.package(url: "https://github.com/hummingbird-project/hummingbird-auth", from: "2.1.0"),
-		.package(url: "https://github.com/vapor/jwt-kit", from: "5.3.0"),
-		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "1.1.1"),
+		.package(url: "https://github.com/hummingbird-project/hummingbird-auth", from: "2.2.0"),
+		.package(url: "https://github.com/vapor/jwt-kit", from: "5.5.0"),
+		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "1.1.3"),
 		// Plugins:
-		.package(url: "https://codeberg.org/Cyberbeni/SwiftFormat-mirror", from: "0.59.1"),
+		.package(url: "https://codeberg.org/Cyberbeni/SwiftFormat-mirror", from: "0.60.1"),
 	],
 	targets: [
 		.executableTarget(
