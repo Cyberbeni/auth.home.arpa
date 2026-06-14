@@ -1,7 +1,14 @@
 :root {
-  color-scheme: light dark;
+	color-scheme: light dark;
 }
 
+@supports (font: -apple-system-body) {
+	* {
+		font: -apple-system-body;
+	}
+}
+
+/* TODO: fix on iOS with large text size */
 .login-form {
 	position: absolute;
 	left: 50%;
