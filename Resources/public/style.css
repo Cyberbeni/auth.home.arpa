@@ -8,27 +8,68 @@
 	}
 }
 
-/* TODO: fix on iOS with large text size */
 .login-form {
 	position: absolute;
-	left: 50%;
 	top: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+	@media (min-width: 576px) {
+		left: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+	@media not (min-width: 576px) {
+		-webkit-transform: translateY(-50%);
+		transform: translateY(-50%);
+	}
 }
 
-td, th {
-	padding: 0.1875em;
+.grid {
+	display: grid;
+	gap: 0.375rem;
+	@media (min-width: 576px) {
+		grid-template-columns: auto auto;
+		width: min-content;
+	}
+	@media not (min-width: 576px) {
+		width: calc(100% - 1.75rem);
+		padding: 0.375rem;
+	}
+}
+
+/* Touchscreen */
+@media (pointer:coarse) {
+	input {
+		min-height: 26pt;
+	}
+
+	button, input[type=submit] {
+		min-height: 32pt;
+	}
+}
+
+@media not (pointer:coarse) {
+	input {
+		min-height: 20pt;
+	}
+
+	button, input[type=submit] {
+		min-height: 24pt;
+	}
 }
 
 input {
-	min-height: 26px;
-}
-
-button, input[type=submit] {
-	min-height: 32px;
+	min-width: 140pt;
 }
 
 #login-button {
 	width: 100%;
+}
+
+.grid > button,
+.grid > input[type=submit]
+{
+	grid-column: 1 / -1;
+}
+
+#password-hash {
+	overflow-wrap: anywhere;
 }

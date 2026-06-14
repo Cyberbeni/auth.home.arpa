@@ -14,47 +14,30 @@ struct LoginPage: HTMLDocument {
 	}
 
 	var body: some HTML {
-		form(.class("login-form"), .hx.post("/api/login")) {
-			table {
-				tr {
-					td {
-						label {
-							"User:"
-						}
-					}
-					td {
-						input(
-							.type(.text),
-							.autocomplete("username"),
-							.id("user"),
-							.name("user"),
-							.init(name: "autocapitalize", value: "off"),
-							.required,
-						)
-					}
-				}
-				tr {
-					td {
-						label {
-							"Password:"
-						}
-					}
-					td {
-						input(
-							.type(.password),
-							.autocomplete("current-password"),
-							.id("password"),
-							.name("password"),
-							.required,
-						)
-					}
-				}
-				tr {
-					td(.init(name: "colspan", value: "2")) {
-						input(.type(.submit), .value("Login"), .id("login-button"))
-					}
-				}
+		form(.class("login-form grid"), .hx.post("/api/login")) {
+			// TODO: doesn't work with Proton Pass
+			label {
+				"User:"
 			}
+			input(
+				.type(.text),
+				.autocomplete("username"),
+				.id("user"),
+				.name("user"),
+				.init(name: "autocapitalize", value: "off"),
+				.required,
+			)
+			label {
+				"Password:"
+			}
+			input(
+				.type(.password),
+				.autocomplete("current-password"),
+				.id("password"),
+				.name("password"),
+				.required,
+			)
+			input(.type(.submit), .value("Login"), .id("login-button"))
 		}
 	}
 }
