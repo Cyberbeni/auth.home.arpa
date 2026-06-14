@@ -2,10 +2,8 @@
 	color-scheme: light dark;
 }
 
-@supports (font: -apple-system-body) {
-	* {
-		font: -apple-system-body;
-	}
+* {
+	font: -apple-system-body;
 }
 
 .login-form {
