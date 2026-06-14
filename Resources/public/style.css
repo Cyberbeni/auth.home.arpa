@@ -1,5 +1,9 @@
 :root {
-  color-scheme: light dark;
+	color-scheme: light dark;
+}
+
+* {
+	font: -apple-system-body;
 }
 
 .login-form {
@@ -10,18 +14,54 @@
 	transform: translate(-50%, -50%);
 }
 
-td, th {
-	padding: 0.1875em;
+.grid {
+	display: grid;
+	gap: 0.375rem;
+	@media (min-width: 576px) {
+		grid-template-columns: auto auto;
+		width: min-content;
+	}
+	@media not (min-width: 576px) {
+		width: calc(100% - 0.75rem);
+		padding: 0.375rem 0;
+	}
+}
+
+/* Touchscreen */
+@media (pointer:coarse) {
+	input {
+		min-height: 26pt;
+	}
+
+	button, input[type=submit] {
+		min-height: 32pt;
+	}
+}
+
+@media not (pointer:coarse) {
+	input {
+		min-height: 20pt;
+	}
+
+	button, input[type=submit] {
+		min-height: 24pt;
+	}
 }
 
 input {
-	min-height: 26px;
-}
-
-button, input[type=submit] {
-	min-height: 32px;
+	min-width: 140pt;
 }
 
 #login-button {
 	width: 100%;
+}
+
+.grid > button,
+.grid > input[type=submit]
+{
+	grid-column: 1 / -1;
+}
+
+#password-hash {
+	overflow-wrap: anywhere;
 }

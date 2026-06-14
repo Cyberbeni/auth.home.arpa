@@ -14,46 +14,31 @@ struct LoginPage: HTMLDocument {
 	}
 
 	var body: some HTML {
-		form(.class("login-form"), .hx.post("/api/login")) {
-			table {
-				tr {
-					td {
-						label {
-							"User:"
-						}
-					}
-					td {
-						input(
-							.type(.text),
-							.autocomplete("username"),
-							.id("user"),
-							.name("user"),
-							.init(name: "autocapitalize", value: "off"),
-							.required,
-						)
-					}
+		form(.hx.post("/api/login")) {
+			// Proton Pass doesn't autofill if the labels and inputs are at the root of the form
+			div(.class("login-form grid")) {
+				label {
+					"User:"
 				}
-				tr {
-					td {
-						label {
-							"Password:"
-						}
-					}
-					td {
-						input(
-							.type(.password),
-							.autocomplete("current-password"),
-							.id("password"),
-							.name("password"),
-							.required,
-						)
-					}
+				input(
+					.type(.text),
+					.autocomplete("username"),
+					.id("user"),
+					.name("user"),
+					.init(name: "autocapitalize", value: "off"),
+					.required,
+				)
+				label {
+					"Password:"
 				}
-				tr {
-					td(.init(name: "colspan", value: "2")) {
-						input(.type(.submit), .value("Login"), .id("login-button"))
-					}
-				}
+				input(
+					.type(.password),
+					.autocomplete("current-password"),
+					.id("password"),
+					.name("password"),
+					.required,
+				)
+				input(.type(.submit), .value("Login"), .id("login-button"))
 			}
 		}
 	}
