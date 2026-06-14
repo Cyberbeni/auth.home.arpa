@@ -1,4 +1,6 @@
-/* TODO: dark mode colors */
+:root {
+  color-scheme: light dark;
+}
 
 .login-form {
 	position: absolute;
