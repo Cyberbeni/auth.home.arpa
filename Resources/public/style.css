@@ -12,18 +12,25 @@
 	top: 50%;
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
+	@media not (min-width: 576px) {
+		width: calc(100% - 16pt);
+		padding: 8pt 0;
+	}
+}
+
+.grid:not(.login-form) {
+	@media not (min-width: 576px) {
+		width: 100%;
+	}
 }
 
 .grid {
 	display: grid;
 	gap: 0.375rem;
+	align-items: center;
 	@media (min-width: 576px) {
 		grid-template-columns: auto auto;
 		width: min-content;
-	}
-	@media not (min-width: 576px) {
-		width: calc(100% - 0.75rem);
-		padding: 0.375rem 0;
 	}
 }
 
@@ -38,6 +45,7 @@
 	}
 }
 
+/* Non-touchscreen */
 @media not (pointer:coarse) {
 	input {
 		min-height: 20pt;
