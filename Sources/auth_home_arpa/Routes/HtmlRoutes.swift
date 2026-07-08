@@ -8,6 +8,7 @@ extension Router {
 		staticFilesTimestamp: String,
 		userService: UserService,
 	) -> Self {
+		let contentSecurityPolicy = "default-src 'self' 'unsafe-inline'"
 		get("") { request, _ throws(Never) in
 			let authToken: AuthToken?
 			let invalidCookie: Bool
@@ -18,7 +19,10 @@ extension Router {
 				authToken = nil
 				invalidCookie = false
 			}
-			return HTMLResponse {
+			return HTMLResponse(additionalHeaders: [
+				.cacheControl: CacheControl.privateNoCache,
+				.contentSecurityPolicy: contentSecurityPolicy,
+			]) {
 				IndexPage(
 					generalConfig: generalConfig,
 					staticFilesTimestamp: staticFilesTimestamp,
@@ -30,7 +34,10 @@ extension Router {
 		}
 
 		get("login.html") { _, _ throws(Never) in
-			HTMLResponse {
+			HTMLResponse(additionalHeaders: [
+				.cacheControl: CacheControl.publicNoCache,
+				.contentSecurityPolicy: contentSecurityPolicy,
+			]) {
 				LoginPage(
 					generalConfig: generalConfig,
 					staticFilesTimestamp: staticFilesTimestamp,

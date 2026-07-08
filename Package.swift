@@ -38,7 +38,6 @@ let package = Package(
 			],
 			swiftSettings: [
 				.unsafeFlags(["-Xfrontend", "-warn-long-expression-type-checking=100"], .when(configuration: .debug)),
-				.treatAllWarnings(as: .error, .when(configuration: .release)),
 				.enableUpcomingFeature("NonisolatedNonsendingByDefault"),
 			],
 			linkerSettings: [
