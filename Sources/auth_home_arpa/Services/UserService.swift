@@ -13,10 +13,12 @@ struct UserService {
 	private let cache = LruCache<AuthTokenWrapper>(limit: 32)
 
 	func checkPassword(user: String, password: String, ip: String) async -> String? {
-		guard
-			let hashedPassword = userConfig.users[user]?.password,
-			Bcrypt.verify(password, hash: hashedPassword)
-		else {
+		guard let hashedPassword = userConfig.users[user]?.password else {
+			// Calculate hash, so clients can't get information about which user exists based on how long it takes to receive the response
+			_ = Bcrypt.hash(password)
+			return nil
+		}
+		guard Bcrypt.verify(password, hash: hashedPassword) else {
 			return nil
 		}
 		let token = AuthToken(
@@ -29,6 +31,7 @@ struct UserService {
 			cache.insert(.success(token), forKey: jwt)
 			return "\(Constants.cookieName)=\(jwt)"
 		} catch {
+			Log.error("Failed to sign JWT")
 			return nil
 		}
 	}
