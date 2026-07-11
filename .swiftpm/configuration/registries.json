@@ -1,0 +1,12 @@
+{
+  "authentication" : {
+
+  },
+  "registries" : {
+    "[default]" : {
+      "supportsAvailability" : false,
+      "url" : "https://codeberg.org/api/packages/Cyberbeni/swift"
+    }
+  },
+  "version" : 1
+}

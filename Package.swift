@@ -19,7 +19,7 @@ let package = Package(
 		.package(url: "https://github.com/elementary-swift/elementary-htmx", from: "0.5.1"),
 		.package(url: "https://github.com/hummingbird-project/hummingbird-auth", from: "2.2.0"),
 		.package(url: "https://github.com/vapor/jwt-kit", from: "5.5.0"),
-		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "1.1.3"),
+		.package(id: "Cyberbeni.LruCache", from: "1.1.3"),
 		// Plugins:
 		.package(url: "https://codeberg.org/Cyberbeni/SwiftFormat-mirror", from: "0.60.1"),
 	],
@@ -33,7 +33,7 @@ let package = Package(
 				.product(name: "ElementaryHTMX", package: "elementary-htmx"),
 				.product(name: "HummingbirdBcrypt", package: "hummingbird-auth"),
 				.product(name: "JWTKit", package: "jwt-kit"),
-				.product(name: "LruCache", package: "LruCache"),
+				.product(name: "LruCache", package: "Cyberbeni.LruCache"),
 				.targetItem(name: "Foundation", condition: .when(platforms: [.linux])),
 			],
 			swiftSettings: [

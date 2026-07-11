@@ -1,5 +1,5 @@
 {
-  "originHash" : "d83794f0f51e1d21f0703f1a67df75f41d50de72fe0587af6bbe344be2347b26",
+  "originHash" : "8843afc547f3106f82dc0b5d8cce5d2edacff84f5f8b24fdcdf915be6f552d86",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -17,6 +17,14 @@
       "state" : {
         "revision" : "0013c6762105c812f41795283f48fac4dbc83b7a",
         "version" : "1.4.2"
+      }
+    },
+    {
+      "identity" : "Cyberbeni.LruCache",
+      "kind" : "registry",
+      "location" : "",
+      "state" : {
+        "version" : "1.1.3"
       }
     },
     {
@@ -71,15 +79,6 @@
       "state" : {
         "revision" : "7abc497b0f907191933c87166e9b6a41b9d028d6",
         "version" : "5.6.0"
-      }
-    },
-    {
-      "identity" : "lrucache",
-      "kind" : "remoteSourceControl",
-      "location" : "https://codeberg.org/Cyberbeni/LruCache",
-      "state" : {
-        "revision" : "6d62971f45b9ddca4c19f6361c1bdb0f534c3d46",
-        "version" : "1.1.3"
       }
     },
     {
