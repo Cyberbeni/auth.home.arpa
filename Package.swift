@@ -13,7 +13,7 @@ let package = Package(
 		),
 	],
 	dependencies: [
-		.package(url: "https://codeberg.org/Cyberbeni/CBLogging", from: "1.4.2"),
+		.package(id: "Cyberbeni.CBLogging", from: "1.4.3"),
 		.package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.25.0"),
 		.package(url: "https://github.com/hummingbird-community/hummingbird-elementary", from: "0.5.1"),
 		.package(url: "https://github.com/elementary-swift/elementary-htmx", from: "0.5.1"),
@@ -27,7 +27,7 @@ let package = Package(
 		.executableTarget(
 			name: "auth_home_arpa",
 			dependencies: [
-				.product(name: "CBLogging", package: "CBLogging"),
+				.product(name: "CBLogging", package: "Cyberbeni.CBLogging"),
 				.product(name: "Hummingbird", package: "hummingbird"),
 				.product(name: "HummingbirdElementary", package: "hummingbird-elementary"),
 				.product(name: "ElementaryHTMX", package: "elementary-htmx"),
