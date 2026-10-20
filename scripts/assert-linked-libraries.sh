@@ -13,6 +13,7 @@ do_it() {
 		Foundation
 		FoundationInternationalization
 		_FoundationICU
+		FoundationNetworking
 	)
 	if [ -z "$APPS" ]; then
 		echo "error: no executable targets found"
