@@ -19,7 +19,7 @@ let package = Package(
 		.package(url: "https://github.com/elementary-swift/elementary-htmx", from: "0.5.1"),
 		.package(url: "https://github.com/hummingbird-project/hummingbird-auth", from: "2.2.0"),
 		.package(url: "https://github.com/vapor/jwt-kit", from: "5.5.0"),
-		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "1.1.3"),
+		.package(url: "https://codeberg.org/Cyberbeni/LruCache", from: "2.0.0"),
 		// Plugins:
 		.package(url: "https://codeberg.org/Cyberbeni/SwiftFormat-artifactbundle", from: "0.63.0"),
 	],
