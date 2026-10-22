@@ -1,5 +1,4 @@
 import JWTKit
-import LruCache
 
 struct AuthToken: JWTPayload {
 	fileprivate static let keys = JWTKeyCollection()
@@ -39,8 +38,8 @@ struct AuthToken: JWTPayload {
 
 typealias AuthTokenWrapper = Result<AuthToken, any Error>
 
-extension AuthTokenWrapper: @retroactive CacheItem {
-	public init(fromCacheKey cookie: String) async {
+extension AuthTokenWrapper {
+	init(fromCookie cookie: String) async {
 		do {
 			self = try await .success(AuthToken.keys.verify(cookie, as: AuthToken.self))
 		} catch {

@@ -1,5 +1,5 @@
 {
-  "originHash" : "42d763035966ba072c8d95afe2872263f0231bfbb1e7525a4e9544cfe116c0f7",
+  "originHash" : "1fea252f731546996cee45dd4a0ce05ef2c64dc9f1af6530c45db9c78ee2457a",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://codeberg.org/Cyberbeni/LruCache",
       "state" : {
-        "revision" : "4083d1af08abc4a4629045bb55b365377bda182a",
-        "version" : "1.1.4"
+        "revision" : "59bde294ff2cc5cfcf0bf2cc70ad1778bd7ee20e",
+        "version" : "2.0.0"
       }
     },
     {

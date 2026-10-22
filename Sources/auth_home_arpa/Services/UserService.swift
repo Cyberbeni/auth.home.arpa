@@ -10,7 +10,7 @@ struct UserService {
 
 	let generalConfig: Config.General
 	let userConfig: Config.User
-	private let cache = LruCache<AuthTokenWrapper>(limit: 32)
+	private let cache = LruCache<String, AuthTokenWrapper>(limit: 32, calculateValue: AuthTokenWrapper.init(fromCookie:))
 
 	func checkPassword(user: String, password: String, ip: String) async -> String? {
 		guard let hashedPassword = userConfig.users[user]?.password else {
